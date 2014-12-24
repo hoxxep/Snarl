@@ -1,0 +1,18 @@
+# Mac Stuff
+.DS_Store
+
+# Package folders
+node_modules/
+situs/
+
+# Duplicate files
+docs/static/snarl*
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
