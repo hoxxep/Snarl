@@ -1,12 +1,1 @@
-
-/** {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-*:before,
-*:after {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}*/
+header.jumbotron{background:#58aae6;color:#fff;text-align:center}#wrapper{width:800px;border:1px solid #eee;border-top:none;border-bottom:none;margin:20px auto;padding:30px}

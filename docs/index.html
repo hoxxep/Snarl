@@ -4,39 +4,95 @@
     <title>Snarl Web Notifications</title>
     <link rel="stylesheet" type="text/css" href="static/normalize.css">
     <link rel="stylesheet" type="text/css" href="static/snarl.min.css">
+    <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="static/style.css">
 </head>
 <body>
-    <h1>Snarl Notifications</h1>
-    <input id="username" placeholder="Username">
-    <textarea id="message" placeholder="Message"></textarea>
-    <button id="send-message">Send Message</button>
+    <header class="jumbotron">
+        <h1>Snarl</h1>
+        <p>Grunt-style notifications for your web app.</p>
+    </header>
+    <div id="wrapper">
+        <h2>Quick Demo</h2>
+        <p><button id="snarl-demo" class="btn btn-success">Open Notification</button></p>
 
-    <button id="snarl-demo">Open Notification</button>
+        <h2>Messages Demo</h2>
+        <p><input id="username" placeholder="Username" class="form-control"></p>
+        <p><textarea id="message" placeholder="Message" class="form-control"></textarea></p>
+        <p><button id="send-message" class="btn btn-success">Send Message</button></p>
+    </div>
+    <footer>Footer</footer>
+
     <script src="static/jquery-1.10.2.min.js"></script>
     <script src="static/snarl.js"></script>
     <script>
         $(document).ready(function () {
+            /**
+             * Basic Demo
+             */
             $('#snarl-demo').click(function() {
                 var id = Snarl.addNotification({
                     title: 'Snarl ' + Snarl.count,
                     text: 'Hello World',
-                    timeout: 3000
+                    timeout: 5000,
+                    action: null
                 });
-                Snarl.setText(id, 'Oi, you there!');
+                setTimeout(function() {
+                    Snarl.setText(id, 'Oi, you there!');
+                }, 2000);
             });
 
-            var messageNotification = null;
+            /**
+             * Messages Demo
+             */
+            var typingNotification = null;
             $('#username').focusout(function() {
-                if (messageNotification === null) {
-                    messageNotification = Snarl.addNotification({
-                        title: $(this).value,
-                        text: 'Registered on the chatroom',
+                if ($('#username').val()) {
+                    Snarl.addNotification({
+                        title: $(this).val(),
+                        text: 'Username change',
                         timeout: 3000,
                         action: null
                     });
+                }
+            });
+            $('#message').keypress(function() {
+                if ($('#username').val()) {
+                    if (typingNotification === null) {
+                        typingNotification = Snarl.addNotification({
+                            title: $('#username').val(),
+                            text: 'Is typing...',
+                            timeout: 3000,
+                            action: null
+                        });
+                    } else {
+                        Snarl.editNotification(typingNotification, {
+                            title: $('#username').val(),
+                            text: 'Is typing...',
+                            timeout: 3000,
+                            action: null
+                        });
+                    }
+                }
+            });
+            $('#send-message').click(function() {
+                if ($('#username').val() && $('#message').val()) {
+                    Snarl.removeNotification(typingNotification);
+                    typingNotification = null;
+                    Snarl.addNotification({
+                        title: $('#username').val(),
+                        text: $('#message').val(),
+                        timeout: 3000,
+                        action: null
+                    });
+                    $('#message').val('');
                 } else {
-                    //TODO
+                    Snarl.addNotification({
+                        title: 'Error',
+                        text: 'No username or message entered!',
+                        timeout: 3000,
+                        action: null
+                    });
                 }
             });
         });

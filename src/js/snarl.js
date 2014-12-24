@@ -79,7 +79,7 @@
         editNotification: function(id, options) {
             addNotificationHTML(id);
 
-            //manage options
+            //TODO: renew timeout on option change (resetTimer())
             var element = Snarl.notifications[id].element;
             if (options.text !== undefined) {
                 element.getElementsByClassName('text')[0].textContent = options.text;
@@ -88,6 +88,9 @@
                 element.getElementsByClassName('title')[0].textContent = options.title;
             }
             if (options.timeout !== undefined) {
+                if (options.timer !== null) {
+                    clearTimeout(Snarl.notifications[id].timer);
+                }
                 var timer = null;
                 if (options.timeout === undefined) {
                     options.timeout = 5000;

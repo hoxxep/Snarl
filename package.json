@@ -8,12 +8,13 @@
     "gulp": "^3.8.10",
     "gulp-jshint": "^1.9.0",
     "gulp-less": "^2.0.1",
-    "gulp-uglify": "^1.0.2",
     "gulp-rename": "^1.2.0",
-    "jshint-stylish": "^1.0.0"
+    "gulp-uglify": "^1.0.2",
+    "jshint-stylish": "^1.0.0",
+    "run-sequence": "^1.0.2"
   },
   "scripts": {
-    "test": "
+    "test": ""
   },
   "repository": {
     "type": "git",
