@@ -11,6 +11,16 @@
     timeout: time in ms | null; for no timeout
     action: string/url | function/callback; action when notification clicked
 
+    Plan
+    ----
+
+    addNotification(options): regular
+    addNotificationHTML(id): run on every edit/set? (check and add base html if necessary)
+    editNotification(id, options): edit existing option
+    formatOptions: (?) checks options and adds defaults
+
+    add errors when id not found (IndexError?)
+
     */
 
     var Snarl = Snarl || {};
@@ -18,30 +28,64 @@
     Snarl = {
         count: 0,
         notifications: {},
+
+        makeID: function() {
+            var text = '';
+            var possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
+
+            for(var i=0; i<5; i++) {
+                text += possible.charAt(
+                    Math.floor(Math.random() * possible.length)
+                );
+            }
+
+            return text;
+        },
+
         addNotification: function(options) {
-            var notification = "<h3>" + options.title + "</h3><p>" + options.text + "</p>",
-                notificationWrapper = document.createElement('div');
+            var notificationText = '<h3 class="title">' + options.title + '</h3><p class="text">' + options.text + '</p>',
+                notificationWrapper = document.createElement('div'),
+                notification = {};
 
             notificationWrapper.className = 'snarl-notification';
-            notificationWrapper.innerHTML = notification;
+            notificationWrapper.innerHTML = notificationText;
 
             Snarl.count += 1;
-            var id = 'snarl-notification-' + Snarl.count;
-            Snarl.notifications[id] = options.action;
-            notificationWrapper.setAttribute('id', id);
+            var id = Snarl.makeID();
+            while (Snarl.notifications[id] !== undefined) {
+                id = Snarl.makeID();
+            }
+            notificationWrapper.setAttribute('id', 'snarl-notification-' + id);
 
             document.getElementById('snarl-wrapper').appendChild(notificationWrapper);
 
+            var timer = null;
             if (options.timeout === undefined) {
                 options.timeout = 5000;
             }
             if (options.timeout !== null) {
-                setTimeout(function() {
+                timer = setTimeout(function() {
                     //FUTURE: remove item from dictionary
-                    //Snarl.notifications[noteClass]();
-                    document.getElementById('snarl-wrapper').removeChild(notificationWrapper);
+                    //document.getElementById('snarl-wrapper').removeChild(notificationWrapper);
+                    Snarl.removeNotification(id);
                 }, options.timeout);
             }
+
+            notification.timeout = options.timeout;
+            notification.action = options.action;
+            notification.timer = timer;
+            notification.active = true;
+            Snarl.notifications[id] = notification;
+
+            return id;  // allow 3rd party code to manipulate notification
+        },
+
+        removeNotification: function(id) {
+            //NOTE: call callback?
+            var notification = document.getElementById('snarl-notification-' + id);
+            notification.parentElement.removeChild(notification);
+            clearTimeout(Snarl.notifications[id].timer);
+            Snarl.notifications[id].active = false;
         },
 
         clickNotification: function(event) {
@@ -61,7 +105,7 @@
             }
 
             var id = notification.getAttribute('id');
-            id = id.match(/snarl-notification-[0-9]+/)[0];
+            id = /snarl-notification-([a-zA-Z0-9]+)/.exec(id)[1];
 
             var action = Snarl.notifications[id];
             if (action === undefined || action === null) {
@@ -70,6 +114,37 @@
                 window.location = action;
             } else if (action.isFunction) {
                 action(); //TODO: add some info (what's clicked)
+            }
+        },
+
+        isDismissed: function(id) {
+            return Snarl.notifications[id].active;
+        },
+
+        setTitle: function(id, title) {
+            document.getElementById('snarl-notification-' + id).getElementsByClassName('title')[0].textContent = title;
+        },
+
+        setText: function(id, text) {
+            document.getElementById('snarl-notification-' + id).getElementsByClassName('text')[0].textContent = text;
+        },
+
+        setTimeout: function(id, timeout) {
+            var timer = Snarl.notifications[id].timer;
+            if (timer !== null) {
+                clearTimeout(timer);
+            }
+            timer = null;
+            if (timeout !== null) {
+                timer = setTimeout(function() {
+                    Snarl.removeNotification(id);
+                }, timeout);
+            }
+            Snarl.notifications[id].timer = timer;
+            Snarl.notifications[id].timeout = timeout;
+
+            if (!Snarl.notifications[id].active) {
+                //TODO: if is dismissed re-show notification
             }
         }
     };
@@ -91,7 +166,7 @@
      */
 
     (function () {
-        if (document.readyState === "complete" || document.readyState === "interactive" && document.body) {
+        if (document.readyState === 'complete' || document.readyState === 'interactive' && document.body) {
             snarlInitialize();
         } else {
             if (document.addEventListener) {
