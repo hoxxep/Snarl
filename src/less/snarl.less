@@ -12,6 +12,9 @@
     width: 100%;
     padding: 20px;
     margin:0 0 10px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
 
     pointer-events: all;
 
@@ -32,10 +35,39 @@
         0 0 20px rgba(0,0,0,0.05) inset;
     border-radius: 5px;
 
-    h3 {
+    h3, p {
         margin: 0;
     }
-    p {
-        margin: 0;
+
+    //TODO: refactor/clean up
+    //TODO: fix font-awesome requirement
+    .snarl-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 80px;
+        height: 100%;
+        border-left: 1px solid rgba(0,0,0,0.1);
+        box-shadow: -30px 0 30px #f2f2f2;
+        z-index: 2;
+        opacity: 0;
+        transition: opacity 0.25s ease-out;
+        vertical-align: middle;
+        text-align: center;
+        cursor: pointer;
+
+        i {
+            position:relative;
+            font-size:20px;
+            line-height:20px;
+            margin:-10px;
+            top:50%;
+            vertical-align:top;
+            color:#aaa;
+        }
+    }
+    &:hover .snarl-close {
+        opacity:1;
     }
 }

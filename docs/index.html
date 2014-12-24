@@ -3,6 +3,7 @@
 <head>
     <title>Snarl Web Notifications</title>
     <link rel="stylesheet" type="text/css" href="static/normalize.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="static/snarl.min.css">
     <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="static/style.css">
@@ -38,7 +39,7 @@
                     action: null
                 });
                 setTimeout(function() {
-                    Snarl.setText(id, 'Oi, you there!');
+                    Snarl.setText(id, 'Updated notification!');
                 }, 2000);
             });
 
@@ -90,7 +91,7 @@
                     Snarl.addNotification({
                         title: 'Error',
                         text: 'No username or message entered!',
-                        timeout: 3000,
+                        timeout: null,
                         action: null
                     });
                 }

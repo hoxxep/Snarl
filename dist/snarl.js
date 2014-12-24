@@ -14,12 +14,9 @@
     Plan
     ----
 
-    addNotification(options): regular
-    addNotificationHTML(id): run on every edit/set? (check and add base html if necessary)
-    editNotification(id, options): edit existing option
     formatOptions: (?) checks options and adds defaults
 
-    add errors when id not found (IndexError?)
+    TODO: add errors when id not found (IndexError?)
 
     */
 
@@ -31,7 +28,7 @@
             Snarl.notifications[id] = {};
         }
         if (Snarl.notifications[id].element === null || Snarl.notifications[id].element === undefined) {
-            var notificationContent = '<h3 class="title"></h3><p class="text"></p>',
+            var notificationContent = '<h3 class="title"></h3><p class="text"></p><div class="snarl-close"><i class="fa fa-close"></i></div>',
                 notificationWrapper = document.createElement('div');
             notificationWrapper.innerHTML = notificationContent;
             notificationWrapper.className = 'snarl-notification';
@@ -41,6 +38,12 @@
         if (Snarl.notifications[id].element.parentElement === null) {
             document.getElementById('snarl-wrapper').appendChild(Snarl.notifications[id].element);
         }
+    }
+
+    function formatOptions(options) {
+        //TODO: merge options with default
+        // merge with options to force a value/reset for timeout
+        // have a reopen preference?
     }
 
     /** Public object */
@@ -76,10 +79,9 @@
             return id;  // allow 3rd party code to manipulate notification
         },
 
-        editNotification: function(id, options) {
+        editNotification: function(id, options, reopen) {
             addNotificationHTML(id);
 
-            //TODO: renew timeout on option change (resetTimer())
             var element = Snarl.notifications[id].element;
             if (options.text !== undefined) {
                 element.getElementsByClassName('text')[0].textContent = options.text;
@@ -110,7 +112,6 @@
         },
 
         removeNotification: function(id) {
-            //NOTE: call callback?
             var notification = document.getElementById('snarl-notification-' + id);
             notification.parentElement.removeChild(notification);
             clearTimeout(Snarl.notifications[id].timer);
@@ -123,9 +124,13 @@
             }
 
             var maxDepth = 3,
-                notification = event.toElement;
+                notification = event.toElement,
+                close = false;
             while (notification.className.lastIndexOf('snarl-notification') === -1) {
                 if (maxDepth > 0) {
+                    if (notification.className.lastIndexOf('snarl-close') !== -1) {
+                        close = true;
+                    }
                     notification = notification.parentElement;
                 } else {
                     console.debug('Clicked inside #snarl-wrapper but no notification was found?');
@@ -136,13 +141,17 @@
             var id = notification.getAttribute('id');
             id = /snarl-notification-([a-zA-Z0-9]+)/.exec(id)[1];
 
-            var action = Snarl.notifications[id];
-            if (action === undefined || action === null) {
-                return;
-            } else if (action.isString) {
-                window.location = action;
-            } else if (action.isFunction) {
-                action(); //TODO: add some info (what's clicked)
+            if (close) {
+                Snarl.removeNotification(id);
+            } else {
+                var action = Snarl.notifications[id];
+                if (action === undefined || action === null) {
+                    return;
+                } else if (action.isString) {
+                    window.location = action;
+                } else if (action.isFunction) {
+                    action(); //TODO: add some info (what's clicked)
+                }
             }
         },
 
