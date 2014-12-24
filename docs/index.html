@@ -20,7 +20,8 @@
             $('#snarl-demo').click(function() {
                 var id = Snarl.addNotification({
                     title: 'Snarl ' + Snarl.count,
-                    text: 'Hello World'
+                    text: 'Hello World',
+                    timeout: 3000
                 });
                 Snarl.setText(id, 'Oi, you there!');
             });
@@ -31,7 +32,7 @@
                     messageNotification = Snarl.addNotification({
                         title: $(this).value,
                         text: 'Registered on the chatroom',
-                        timeout: null,
+                        timeout: 3000,
                         action: null
                     });
                 } else {
