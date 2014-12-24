@@ -1,0 +1,33 @@
+#snarl-wrapper {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 320px;
+  pointer-events: none;
+}
+.snarl-notification {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px;
+  margin: 0 0 10px;
+  pointer-events: all;
+  background: #f2f2f2;
+  /*@gradient:
+        rgba(242,242,242, 0.15) 0,
+        rgba(242,242,242, .3) 40%,
+        rgba(242,242,242, .4) 50%,
+        rgba(242,242,242, .4) 60%,
+        rgba(242,242,242, 0) 70%;
+    background: -webkit-linear-gradient(@gradient);
+    background: -moz-linear-gradient(@gradient);
+    background: -o-linear-gradient(@gradient);
+    background: linear-gradient(@gradient);*/
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25), 0 0 20px rgba(0, 0, 0, 0.05) inset;
+  border-radius: 5px;
+}
+.snarl-notification h3 {
+  margin: 0;
+}
+.snarl-notification p {
+  margin: 0;
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Snarl Web Notifications</title>
+    <link rel="stylesheet" type="text/css" href="static/normalize.css">
+    <link rel="stylesheet" type="text/css" href="static/snarl.min.css">
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
+<body>
+    <h1>Snarl Notifications</h1>
+    <button id="snarl-demo">Open Notification</button>
+    <script src="static/jquery-1.10.2.min.js"></script>
+    <script src="static/snarl.js"></script>
+    <script>
+        $('#snarl-demo').click(function() {
+            Snarl.addNotification({
+                title: 'Snarl ' + Snarl.count,
+                text: 'Hello World'
+            });
+        });
+    </script>
+</body>
+</html>

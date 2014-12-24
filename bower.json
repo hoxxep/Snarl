@@ -1,0 +1,26 @@
+{
+  "name": "Snarl",
+  "version": "0.1.0",
+  "homepage": "http://wringtheworld.com",
+  "authors": [
+    "Liam Gray <hoxxep@gmail.com>"
+  ],
+  "description": "Web Notifications based on Growl",
+  "main": "dist/snarl.min.js",
+  "keywords": [
+    "notifications",
+    "growl"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src",
+    "test",
+    "tests",
+    "Gruntfile.js",
+    "package.json",
+    "README.md"
+  ]
+}
