@@ -20,7 +20,13 @@
 
     */
 
-    var Snarl = Snarl || {};
+    var Snarl = Snarl || {},
+        defaultOptions = {
+            title: '',
+            text: '',
+            timeout: 5000,
+            action: ''
+        };
 
     /** Private functions */
     function addNotificationHTML(id) {
@@ -44,6 +50,16 @@
         //TODO: merge options with default
         // merge with options to force a value/reset for timeout
         // have a reopen preference?
+    }
+    
+    /**
+     * Overwrites obj1's values with obj2's and adds obj2's if non existent in obj1
+     */
+    function merge_options(obj1, obj2) {
+        var obj3 = {}, attrname;
+        for (attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+        for (attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+        return obj3;
     }
 
     /** Public object */
@@ -71,10 +87,13 @@
                 id = Snarl.makeID();
             }
 
-            //TODO: merge default options
+            // Merge default options
+            options = options || {};
+            var mergedOptions = merge_options(defaultOptions, options);
+            
 
             addNotificationHTML(id);
-            Snarl.editNotification(id, options);
+            Snarl.editNotification(id, mergedOptions);
 
             return id;  // allow 3rd party code to manipulate notification
         },
