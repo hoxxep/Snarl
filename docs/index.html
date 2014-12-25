@@ -49,9 +49,11 @@
                     timeout: null,
                     action: function() {
                         Snarl.editNotification(id, {
-                            text: 'You clicked the notification!',
-                            timeout: 3000,
-                            action: null
+                            text: 'You clicked the notification! Click once more, click the dismiss button, or wait 5000ms to close it.',
+                            timeout: 5000,
+                            action: function() {
+                                Snarl.removeNotification(id);
+                            }
                         });
                     }
                 });
@@ -66,7 +68,7 @@
                 if ($('#name').val()) {
                     Snarl.addNotification({
                         title: $(this).val(),
-                        text: 'Name change'
+                        text: 'Signed in'
                     });
                 }
             });

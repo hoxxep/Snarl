@@ -58,35 +58,37 @@
             action: null
         },
 
-        //TODO refactor checking into makeID
+        setDefaultOptions: function(options) {
+            Snarl.defaultOptions = mergeOptions(Snarl.defaultOptions, options);
+        },
+
         makeID: function() {
-            var text = '';
+            var id = '';
             var possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
-            for(var i=0; i<5; i++) {
-                text += possible.charAt(
-                    Math.floor(Math.random() * possible.length)
-                );
-            }
+            // check ID doesn't already exist and regen if needed
+            do {
+                id = '';
+                for(var i=0; i<5; i++) {
+                    id += possible.charAt(
+                        Math.floor(Math.random() * possible.length)
+                    );
+                }
+            } while (Snarl.notifications[id] !== undefined);
 
-            return text;
+            return id;
         },
 
         addNotification: function(options) {
             Snarl.count += 1;
             var id = Snarl.makeID();
-            while (Snarl.notifications[id] !== undefined) {
-                id = Snarl.makeID();
-            }
 
             addNotificationHTML(id);
             Snarl.editNotification(id, options);
 
-            return id;  // allow 3rd party code to manipulate notification
+            return id;  // allow 3rd party code to track notification
         },
 
-        //NOTE: care is needed in dealing with manual and timeout removals.
-        // or I just need to fix the timeout renew...
         editNotification: function(id, options) {
             addNotificationHTML(id);
 
@@ -98,35 +100,28 @@
             }
             options = mergeOptions(Snarl.notifications[id].options, options);
 
-            //TODO: remove if undefined since options are merged so they're
-            // now always overwritten?
             var element = Snarl.notifications[id].element;
-            if (options.text !== undefined) {
-                element.getElementsByClassName('text')[0].textContent = options.text;
+
+            //** Title
+            element.getElementsByClassName('title')[0].textContent = options.title;
+
+            //** Text
+            element.getElementsByClassName('text')[0].textContent = options.text;
+
+            //** Timeout
+            if (options.timer !== null) {
+                clearTimeout(Snarl.notifications[id].timer);
             }
-            if (options.title !== undefined) {
-                element.getElementsByClassName('title')[0].textContent = options.title;
+            var timer = null;
+            if (options.timeout !== null) {
+                timer = setTimeout(function() {
+                    Snarl.removeNotification(id);
+                }, options.timeout);
             }
-            if (options.timeout !== undefined) {
-                if (options.timer !== null) {
-                    clearTimeout(Snarl.notifications[id].timer);
-                }
-                var timer = null;
-                if (options.timeout === undefined) {
-                    options.timeout = 5000;
-                }
-                if (options.timeout !== null) {
-                    timer = setTimeout(function() {
-                        //FUTURE: remove item from dictionary?
-                        Snarl.removeNotification(id);
-                    }, options.timeout);
-                }
-                Snarl.notifications[id].timer = timer;
-                //Snarl.notifications[id].timeout = options.timeout;
-            }
-            if (options.action !== undefined) {
-                Snarl.notifications[id].action = options.action;
-            }
+            Snarl.notifications[id].timer = timer;
+
+            //** Click Action/Callback
+            Snarl.notifications[id].action = options.action;
 
             Snarl.notifications[id].options = options;
         },
@@ -144,7 +139,7 @@
                 Snarl.notifications[id].active = false;
                 return true;
             } else {
-                return false; //false if failed to remove
+                return false;  //false if failed to remove
             }
         },
 
@@ -175,13 +170,13 @@
                 Snarl.removeNotification(id);
             } else {
                 var action = Snarl.notifications[id].action;
-                console.log('clicking: ' + close + ' ' + action);
+                //console.log('clicking: ' + close + ' ' + action);
                 if (action === undefined || action === null) {
                     return;
                 } else if (typeof action === "string") {
                     window.location = action;
                 } else if (typeof action === "function") {
-                    action(); //TODO: add some info (what's clicked)
+                    action(); //TODO: add some cb info (what's clicked)
                 }
             }
         },

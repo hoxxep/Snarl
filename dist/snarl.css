@@ -61,6 +61,10 @@
   vertical-align: top;
   fill: #ccc;
   pointer-events: none;
+  transition: fill 0.25s ease;
+}
+.snarl-notification .snarl-close:hover svg {
+  fill: #aaa;
 }
 .snarl-notification:hover .snarl-close {
   opacity: 1;
