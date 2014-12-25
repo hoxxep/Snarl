@@ -20,13 +20,7 @@
 
     */
 
-    var Snarl = Snarl || {},
-        defaultOptions = {
-            title: '',
-            text: '',
-            timeout: 5000,
-            action: ''
-        };
+    var Snarl = Snarl || {};
 
     /** Private functions */
     function addNotificationHTML(id) {
@@ -45,28 +39,29 @@
             document.getElementById('snarl-wrapper').appendChild(Snarl.notifications[id].element);
         }
     }
-
-    function formatOptions(options) {
-        //TODO: merge options with default
-        // merge with options to force a value/reset for timeout
-        // have a reopen preference?
-    }
     
     /**
      * Overwrites obj1's values with obj2's and adds obj2's if non existent in obj1
      */
-    function merge_options(obj1, obj2) {
-        var obj3 = {}, attrname;
-        for (attrname in obj1) { obj3[attrname] = obj1[attrname]; }
-        for (attrname in obj2) { obj3[attrname] = obj2[attrname]; }
-        return obj3;
+    function mergeOptions(defaults, options) {
+        var merged = {}, attrname;
+        for (attrname in defaults) {merged[attrname] = defaults[attrname];}
+        for (attrname in options) {merged[attrname] = options[attrname];}
+        return merged;
     }
 
     /** Public object */
     Snarl = {
         count: 0,
         notifications: {},
+        defaultOptions: {
+            title: '',
+            text: '',
+            timeout: 3000,
+            action: null
+        },
 
+        //TODO refactor checking into makeID
         makeID: function() {
             var text = '';
             var possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -87,20 +82,28 @@
                 id = Snarl.makeID();
             }
 
-            // Merge default options
-            options = options || {};
-            var mergedOptions = merge_options(defaultOptions, options);
-            
-
             addNotificationHTML(id);
-            Snarl.editNotification(id, mergedOptions);
+            Snarl.editNotification(id, options);
 
             return id;  // allow 3rd party code to manipulate notification
         },
 
-        editNotification: function(id, options, reopen) {
+        //NOTE: care is needed in dealing with manual and timeout removals.
+        // or I just need to fix the timeout renew...
+        editNotification: function(id, options) {
             addNotificationHTML(id);
 
+            options = options || {};
+
+            // use default options for merging
+            if (Snarl.notifications[id].options === undefined) {
+                Snarl.notifications[id].options = Snarl.defaultOptions;
+            }
+            options = mergeOptions(Snarl.notifications[id].options, options);
+            console.debug(options);
+
+            //TODO: remove if undefined since options are merged so they're
+            // now always overwritten?
             var element = Snarl.notifications[id].element;
             if (options.text !== undefined) {
                 element.getElementsByClassName('text')[0].textContent = options.text;
@@ -123,18 +126,30 @@
                     }, options.timeout);
                 }
                 Snarl.notifications[id].timer = timer;
-                Snarl.notifications[id].timeout = options.timeout;
+                //Snarl.notifications[id].timeout = options.timeout;
             }
             if (options.action !== undefined) {
                 Snarl.notifications[id].action = options.action;
             }
+
+            Snarl.notifications[id].options = options;
+        },
+
+        reopenNotification: function(id) {
+            Snarl.editNotification(id);
         },
 
         removeNotification: function(id) {
-            var notification = document.getElementById('snarl-notification-' + id);
-            notification.parentElement.removeChild(notification);
-            clearTimeout(Snarl.notifications[id].timer);
-            Snarl.notifications[id].active = false;
+            //TODO: cleanup
+            if (Snarl.notifications[id].element.parentElement !== null) {
+                var notification = document.getElementById('snarl-notification-' + id);
+                notification.parentElement.removeChild(notification);
+                clearTimeout(Snarl.notifications[id].timer);
+                Snarl.notifications[id].active = false;
+                return true;
+            } else {
+                return false; //false if failed to remove
+            }
         },
 
         clickNotification: function(event) {

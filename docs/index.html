@@ -35,8 +35,7 @@
                 var id = Snarl.addNotification({
                     title: 'Snarl ' + Snarl.count,
                     text: 'Hello World',
-                    timeout: 5000,
-                    action: null
+                    timeout: 5000
                 });
                 setTimeout(function() {
                     Snarl.setText(id, 'Updated notification!');
@@ -48,12 +47,11 @@
              */
             var typingNotification = null;
             $('#username').focusout(function() {
+                typingNotification = null;
                 if ($('#username').val()) {
                     Snarl.addNotification({
                         title: $(this).val(),
-                        text: 'Username change',
-                        timeout: 3000,
-                        action: null
+                        text: 'Username change'
                     });
                 }
             });
@@ -62,17 +60,14 @@
                     if (typingNotification === null) {
                         typingNotification = Snarl.addNotification({
                             title: $('#username').val(),
-                            text: 'Is typing...',
-                            timeout: 3000,
-                            action: null
+                            text: 'Is typing...'
                         });
                     } else {
-                        Snarl.editNotification(typingNotification, {
+                        /*Snarl.editNotification(typingNotification, {
                             title: $('#username').val(),
-                            text: 'Is typing...',
-                            timeout: 3000,
-                            action: null
-                        });
+                            text: 'Is typing...'
+                        });*/
+                        Snarl.reopenNotification(typingNotification);
                     }
                 }
             });
@@ -82,17 +77,13 @@
                     typingNotification = null;
                     Snarl.addNotification({
                         title: $('#username').val(),
-                        text: $('#message').val(),
-                        timeout: 3000,
-                        action: null
+                        text: $('#message').val()
                     });
                     $('#message').val('');
                 } else {
                     Snarl.addNotification({
                         title: 'Error',
-                        text: 'No username or message entered!',
-                        timeout: null,
-                        action: null
+                        text: 'No username or message entered!'
                     });
                 }
             });
