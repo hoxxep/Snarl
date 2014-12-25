@@ -11,16 +11,13 @@
     timeout: time in ms | null; for no timeout
     action: string/url | function/callback; action when notification clicked
 
-    Plan
-    ----
-
-    formatOptions: (?) checks options and adds defaults
-
     TODO: add errors when id not found (IndexError?)
 
     */
 
     var Snarl = Snarl || {};
+
+    var snarlCloseSVG = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve" height="100px" width="100px"><g><path d="M49.5,5c-24.9,0-45,20.1-45,45s20.1,45,45,45s45-20.1,45-45S74.4,5,49.5,5z M71.3,65.2c0.3,0.3,0.5,0.7,0.5,1.1   s-0.2,0.8-0.5,1.1L67,71.8c-0.3,0.3-0.7,0.5-1.1,0.5s-0.8-0.2-1.1-0.5L49.5,56.6L34.4,71.8c-0.3,0.3-0.7,0.5-1.1,0.5   c-0.4,0-0.8-0.2-1.1-0.5l-4.3-4.4c-0.3-0.3-0.5-0.7-0.5-1.1c0-0.4,0.2-0.8,0.5-1.1L43,49.9L27.8,34.9c-0.6-0.6-0.6-1.6,0-2.3   l4.3-4.4c0.3-0.3,0.7-0.5,1.1-0.5c0.4,0,0.8,0.2,1.1,0.5l15.2,15l15.2-15c0.3-0.3,0.7-0.5,1.1-0.5s0.8,0.2,1.1,0.5l4.3,4.4   c0.6,0.6,0.6,1.6,0,2.3L56.1,49.9L71.3,65.2z"/></g></svg>';
 
     /** Private functions */
     function addNotificationHTML(id) {
@@ -28,7 +25,7 @@
             Snarl.notifications[id] = {};
         }
         if (Snarl.notifications[id].element === null || Snarl.notifications[id].element === undefined) {
-            var notificationContent = '<h3 class="title"></h3><p class="text"></p><div class="snarl-close"><i class="fa fa-close"></i></div>',
+            var notificationContent = '<h3 class="title"></h3><p class="text"></p><div class="snarl-close"><!--<i class="fa fa-close"></i>-->' + snarlCloseSVG + '</div>',
                 notificationWrapper = document.createElement('div');
             notificationWrapper.innerHTML = notificationContent;
             notificationWrapper.className = 'snarl-notification';
@@ -100,7 +97,6 @@
                 Snarl.notifications[id].options = Snarl.defaultOptions;
             }
             options = mergeOptions(Snarl.notifications[id].options, options);
-            console.debug(options);
 
             //TODO: remove if undefined since options are merged so they're
             // now always overwritten?
@@ -157,7 +153,7 @@
                 return;
             }
 
-            var maxDepth = 3,
+            var maxDepth = 5,
                 notification = event.toElement,
                 close = false;
             while (notification.className.lastIndexOf('snarl-notification') === -1) {
@@ -178,12 +174,13 @@
             if (close) {
                 Snarl.removeNotification(id);
             } else {
-                var action = Snarl.notifications[id];
+                var action = Snarl.notifications[id].action;
+                console.log('clicking: ' + close + ' ' + action);
                 if (action === undefined || action === null) {
                     return;
-                } else if (action.isString) {
+                } else if (typeof action === "string") {
                     window.location = action;
-                } else if (action.isFunction) {
+                } else if (typeof action === "function") {
                     action(); //TODO: add some info (what's clicked)
                 }
             }
@@ -208,7 +205,6 @@
 
 
     function snarlInitialize() {
-        console.debug('Initialising Snarl...');
         var snarlWrapper = document.createElement('div');
         snarlWrapper.setAttribute('id', 'snarl-wrapper');
 

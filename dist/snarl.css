@@ -15,22 +15,16 @@
   cursor: pointer;
   pointer-events: all;
   background: #f2f2f2;
-  /*@gradient:
-        rgba(242,242,242, 0.15) 0,
-        rgba(242,242,242, .3) 40%,
-        rgba(242,242,242, .4) 50%,
-        rgba(242,242,242, .4) 60%,
-        rgba(242,242,242, 0) 70%;
-    background: -webkit-linear-gradient(@gradient);
-    background: -moz-linear-gradient(@gradient);
-    background: -o-linear-gradient(@gradient);
-    background: linear-gradient(@gradient);*/
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25), 0 0 20px rgba(0, 0, 0, 0.05) inset;
   border-radius: 5px;
 }
-.snarl-notification h3,
-.snarl-notification p {
+.snarl-notification h3 {
   margin: 0;
+  font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.snarl-notification p {
+  margin: 3px 0 0;
+  font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .snarl-notification .snarl-close {
   position: absolute;
@@ -39,23 +33,34 @@
   bottom: 0;
   width: 80px;
   height: 100%;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: -30px 0 30px #f2f2f2;
   z-index: 2;
-  opacity: 0;
-  transition: opacity 0.25s ease-out;
   vertical-align: middle;
   text-align: center;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  background: #f2f2f2;
+  box-shadow: -30px 0 30px #f2f2f2;
+  opacity: 0;
+  transition: opacity 0.25s ease-out;
   cursor: pointer;
+  /*i {
+            position:relative;
+            font-size:20px;
+            line-height:20px;
+            margin:-10px;
+            top:50%;
+            vertical-align:top;
+            color:#aaa;
+        }*/
 }
-.snarl-notification .snarl-close i {
+.snarl-notification .snarl-close svg {
   position: relative;
-  font-size: 20px;
-  line-height: 20px;
-  margin: -10px;
+  width: 18px;
+  height: 18px;
+  margin: -9px;
   top: 50%;
   vertical-align: top;
-  color: #aaa;
+  fill: #ccc;
+  pointer-events: none;
 }
 .snarl-notification:hover .snarl-close {
   opacity: 1;
