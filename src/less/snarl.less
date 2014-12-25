@@ -1,13 +1,22 @@
+// Style:
 @background-color: #f2f2f2;
 @title-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 @text-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+//Position:
+@top: 20px;
+@right: 20px;
+@bottom: auto;
+@left: auto;
 
 //TODO: animation in/out options
 
 #snarl-wrapper {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: @top;
+    right: @right;
+    bottom: @bottom;
+    left: @left;
     width: 320px;
 
     pointer-events: none;
@@ -42,7 +51,6 @@
     }
 
     //TODO: refactor/clean up
-    //TODO: fix font-awesome requirement
     .snarl-close {
         position: absolute;
         top: 0;
@@ -60,16 +68,6 @@
         opacity: 0;
         transition: opacity 0.25s ease-out;
         cursor: pointer;
-
-        /*i {
-            position:relative;
-            font-size:20px;
-            line-height:20px;
-            margin:-10px;
-            top:50%;
-            vertical-align:top;
-            color:#aaa;
-        }*/
 
         svg {
             position:relative;

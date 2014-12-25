@@ -11,9 +11,9 @@
     timeout: time in ms | null; for no timeout
     action: string/url | function/callback; action when notification clicked
 
-    TODO: add errors when id not found (IndexError?)
-
     */
+
+    //TODO: add errors when id not found (IndexError?)
 
     var Snarl = Snarl || {};
 
