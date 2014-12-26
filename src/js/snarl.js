@@ -14,6 +14,9 @@
     */
 
     //TODO: add errors when id not found (IndexError?)
+    //TODO: add not dismissable option
+    //TODO: merge addNotification and reopenNotification?
+    // eg. when id supplied then attempt to reopen it?
 
     var Snarl = Snarl || {};
 
@@ -126,7 +129,7 @@
             Snarl.notifications[id].options = options;
         },
 
-        reopenNotification: function(id) {
+        reOpenNotification: function(id) {
             Snarl.editNotification(id);
         },
 
@@ -174,6 +177,7 @@
                 if (action === undefined || action === null) {
                     return;
                 } else if (typeof action === "string") {
+                    //TODO: do this better
                     window.location = action;
                 } else if (typeof action === "function") {
                     action(); //TODO: add some cb info (what's clicked)
