@@ -16,3 +16,6 @@ logs
 pids
 *.pid
 *.seed
+
+# Jekyll
+_site/

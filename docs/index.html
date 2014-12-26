@@ -13,6 +13,7 @@
     <header class="jumbotron">
         <h1>Snarl</h1>
         <p>Grunt-style notifications for your web app.</p>
+        <p>v0.1.0 - github.com/hoxxep/Snarl</p>
     </header>
     <div id="wrapper">
         <h1>Snarl Notifications Demos</h1>
@@ -23,13 +24,14 @@
             <li>With click callbacks (string + function)</li>
             <li>Messages</li>
         </ul>
+        <h2>Basic Demo</h2>
         <h2>Quick Demo</h2>
-        <p><button id="snarl-demo" class="waves-effect waves-button">Open Notification</button></p>
+        <p><button id="snarl-demo" class="waves-effect waves-button waves-light">Open Notification</button></p>
 
         <h2>Messages Demo</h2>
         <p><input id="name" placeholder="Name" class="form-control"></p>
         <p><textarea id="message" placeholder="Message" class="form-control"></textarea></p>
-        <p><button id="send-message" class="waves-effect waves-button">Send Message</button></p>
+        <p><button id="send-message" class="waves-effect waves-button waves-light">Send Message</button></p>
     </div>
     <footer>Footer</footer>
 
@@ -45,12 +47,12 @@
             $('#snarl-demo').click(function() {
                 var id = Snarl.addNotification({
                     title: 'Snarl #' + Snarl.count,
-                    text: 'Hello, world!',
+                    text: 'Hello, world! Click this notification.',
                     timeout: null,
                     action: function() {
                         Snarl.editNotification(id, {
-                            text: 'You clicked the notification! Click once more, click the dismiss button, or wait 5000ms to close it.',
-                            timeout: 5000,
+                            text: 'You clicked the notification! Click once more, click the dismiss button, or wait 8000ms to close it.',
+                            timeout: 8000,
                             action: function() {
                                 Snarl.removeNotification(id);
                             }
@@ -90,7 +92,8 @@
                     typingNotification = null;
                     Snarl.addNotification({
                         title: $('#name').val(),
-                        text: $('#message').val()
+                        text: $('#message').val(),
+                        timeout: 5000
                     });
                     $('#message').val('');
                 } else {
