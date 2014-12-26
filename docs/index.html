@@ -30,8 +30,30 @@ title: Snarl - Growl notifications for your web app
         <!-- TODO: send html comment TODO mods to the TODO plugin -->
 
         <h1>Snarl Notification Reference</h1>
-        <p>Reference for snarl functions, options, and ids</p>
-
+        <p>TODO: Reference for snarl functions, options, and ids</p>
+        <ul>
+            <li>ids</li>
+            <li>options
+                <ul>
+                    <li>title</li>
+                    <li>text</li>
+                    <li>timeout</li>
+                    <li>action</li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li>setDefaultOptions(options)</li>
+            <li>addNotification(options) : returns id</li>
+            <li>editNotification(id, options)</li>
+            <li>reOpenNotification(id)</li>
+            <li>removeNotification(id) : returns bool</li>
+            <li>isDismissed(id) : returns bool</li>
+            <li>exists(id) : returns bool</li>
+            <li>setTitle(id, title)</li>
+            <li>setText(id, text)</li>
+            <li>setTimeout(id, timeout)</li>
+        </ul>
 
         <h1>Snarl Notification Demos</h1>
         <p><strong>Note:</strong> Snarl itself does not require jQuery as a dependency, but these examples use jQuery to wire up the click events for clarity.</p>
@@ -94,7 +116,7 @@ $('#custom-timeout-demo').click(function() {
         <script>
             var noTimeoutNotification = null;
             $('#no-timeout-open').click(function() {
-                if (noTimeoutNotification === null) {
+                if (Snarl.isDismissed(noTimeoutNotification)) {
                     noTimeoutNotification = Snarl.addNotification({
                         title: 'No Timeout',
                         text: 'Close the notification by pressing either the dismiss button on the page or in the notification.',
@@ -103,16 +125,13 @@ $('#custom-timeout-demo').click(function() {
                 }
             });
             $('#no-timeout-close').click(function() {
-                if (noTimeoutNotification !== null) {
-                    Snarl.removeNotification(noTimeoutNotification);
-                    noTimeoutNotification = null;
-                }
+                Snarl.removeNotification(noTimeoutNotification);
             });
         </script>
 {% highlight javascript %}
 var noTimeoutNotification = null;
 $('#no-timeout-open').click(function() {
-    if (noTimeoutNotification === null) {
+    if (Snarl.isDismissed(noTimeoutNotification)) {
         noTimeoutNotification = Snarl.addNotification({
             title: 'No Timeout',
             text: 'Close the notification by pressing either the dismiss button on the page or in the notification.',
@@ -121,10 +140,7 @@ $('#no-timeout-open').click(function() {
     }
 });
 $('#no-timeout-close').click(function() {
-    if (noTimeoutNotification !== null) {
-        Snarl.removeNotification(noTimeoutNotification);
-        noTimeoutNotification = null;
-    }
+    Snarl.removeNotification(noTimeoutNotification);
 });
 {% endhighlight %}
 
@@ -162,7 +178,7 @@ $('#no-timeout-close').click(function() {
              */
             var notification = null;
             $('#update-notification-open').click(function() {
-                if (notification === null) {
+                if (!Snarl.exists(notification)) {
                     notification = Snarl.addNotification(options());
                 } else {
                     Snarl.editNotification(notification, options());
@@ -197,7 +213,7 @@ function options() {
  */
 var notification = null;
 $('#update-notification-open').click(function() {
-    if (notification === null) {
+    if (!Snarl.exists(notification)) {
         notification = Snarl.addNotification(options());
     } else {
         Snarl.editNotification(notification, options());
