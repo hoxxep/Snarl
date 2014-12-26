@@ -5,7 +5,6 @@
 
     Options
     -------
-
     title: set title of notification
     text: description text
     timeout: time in ms | null; for no timeout
@@ -17,6 +16,7 @@
     //TODO: add not dismissable option
     //TODO: merge addNotification and reopenNotification?
     // eg. when id supplied then attempt to reopen it?
+    //FUTURE: optional sidebar with past/missed notifications
 
     var Snarl = Snarl || {};
 
@@ -134,7 +134,6 @@
         },
 
         removeNotification: function(id) {
-            //TODO: cleanup
             if (Snarl.notifications[id].element.parentElement !== null) {
                 var notification = document.getElementById('snarl-notification-' + id);
                 notification.parentElement.removeChild(notification);

@@ -51,6 +51,6 @@ gulp.task('js', function() {
 gulp.task('build', ['less', 'less-homepage', 'js']);
 gulp.task('default', ['build', 'watch']);
 
-gulp.task('watch', ['build'], function () {
+gulp.task('watch', ['build'], function() {
     gulp.watch(['src/js/*.js', 'src/less/*.less', 'docs/static/style.less'], ['build']);
 });

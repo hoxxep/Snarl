@@ -22,14 +22,20 @@ title: Snarl - Growl notifications for your web app
 <body>
     <header class="jumbotron">
         <h1>Snarl</h1>
-        <p>Grunt-style notifications for your web app.</p>
+        <p>Growl-style notifications for your web app.</p>
         <p>v0.1.0 - github.com/hoxxep/Snarl</p>
     </header>
     <div id="wrapper">
+        <!-- TODO: download and getting started -->
+        <!-- TODO: send html comment TODO mods to the TODO plugin -->
+
         <h1>Snarl Notification Reference</h1>
         <p>Reference for snarl functions, options, and ids</p>
+
+
         <h1>Snarl Notification Demos</h1>
         <p><strong>Note:</strong> Snarl itself does not require jQuery as a dependency, but these examples use jQuery to wire up the click events for clarity.</p>
+        <!-- TODO: proper links and contents (sticky side-nav?) -->
         <ul>
             <li>Basic</li>
             <li>With timer (null open+close, and with specified delay)</li>
@@ -40,7 +46,7 @@ title: Snarl - Growl notifications for your web app
         </ul>
         <h2>Basic Demo</h2>
         <p>Adding a notification is really simple with snarl. Specify a title and some text (as a description) and your notification will appear!</p>
-        <p><button id="basic-demo" class="waves-effect waves-button">Basic Demo</button></p>
+        <p><button id="basic-demo" class="waves-effect waves-button waves-light">Basic Demo</button></p>
         <script>
             $('#basic-demo').click(function() {
                 Snarl.addNotification({
@@ -61,7 +67,7 @@ $('#basic-demo').click(function() {
         <h2>Timeouts</h2>
         <p>Snarl supports custom timeouts specified in milliseconds or even having no timeouts at all.</p>
         <h3>Custom Timeout</h3>
-        <p><button id="custom-timeout-demo" class="waves-effect waves-button">Custom Timeout</button></p>
+        <p><button id="custom-timeout-demo" class="waves-effect waves-button waves-light">Custom Timeout</button></p>
         <script>
             $('#custom-timeout-demo').click(function() {
                 Snarl.addNotification({
@@ -84,7 +90,7 @@ $('#custom-timeout-demo').click(function() {
         <h3>No Timeout</h3>
         <p>Notifications with no timeouts must either be manually dismissed by the user, or can be removed by your code once an event is complete. Updating notifications is done using the ID string returned by <code>Snarl.addNotification()</code>.</p>
         <p><button id="no-timeout-open" class="waves-effect waves-button waves-light">Open Notification</button>
-            <button id="no-timeout-close" class="waves-effect waves-button waves-light">Close Notification</button></p>
+            <button id="no-timeout-close" class="waves-effect waves-button waves-light close-button">Close Notification</button></p>
         <script>
             var noTimeoutNotification = null;
             $('#no-timeout-open').click(function() {
@@ -129,7 +135,7 @@ $('#no-timeout-close').click(function() {
         <p><input id="update-notification-timeout" class="form-control" placeholder="Notification Timeout (blank = null)"></p>
         <p>
             <button id="update-notification-open" class="waves-effect waves-button waves-light">Open/Edit Notification</button>
-            <button id="update-notification-close" class="waves-effect waves-button waves-light">Close Notification</button>
+            <button id="update-notification-close" class="waves-effect waves-button waves-light close-button">Close Notification</button>
         </p>
         <script>
             /**
@@ -356,18 +362,15 @@ $('#send-message').click(function() {
     }
 });
 {% endhighlight %}
+
+        <!-- TODO: final paragraph/follow on github/get -->
     </div>
-    <footer>Footer</footer>
+
+    <footer>Copyright &copy; <a href="https://github.com/hoxxep" target="_blank">Liam Gray</a></footer>
 
     <script>
+        // init waves
         Waves.displayEffect();
-        $(document).ready(function () {
-
-            /**
-             * Messages Demo
-             */
-
-        });
     </script>
 </body>
 </html>
