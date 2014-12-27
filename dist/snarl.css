@@ -28,6 +28,9 @@
   margin: 3px 0 0;
   font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+.snarl-notification.not-dismissable .snarl-close {
+  display: none;
+}
 .snarl-notification .snarl-close {
   position: absolute;
   top: 0;

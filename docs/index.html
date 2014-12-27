@@ -65,15 +65,16 @@ title: Snarl - Growl notifications for your web app
         <p><code>text</code>: String - description part of the notification.</p>
         <p><code>timeout</code>: Integer/null</p>
         <ul>
-            <li>Integer: timeout of notification in milliseconds</li>
-            <li>null: no timeout</li>
+            <li>Integer: timeout of notification in milliseconds.</li>
+            <li>null: no timeout.</li>
         </ul>
         <p><code>action</code>: String/Function/null</p>
         <ul>
-            <li>String: url of page to visit if notification is clicked</li>
-            <li>Function: callback function to run on notification click</li>
-            <li>null: no callback/action when clicked</li>
+            <li>String: url of page to visit if notification is clicked.</li>
+            <li>Function: callback function to run on notification click. Is passed the notification id as a parameter.</li>
+            <li>null: no callback/action when clicked.</li>
         </ul>
+        <p><code>dismissable</code>: true/false whether the notification is dismissable</p>
         
         <h3>Default Options</h3>
 {% highlight javascript %}
@@ -81,19 +82,21 @@ Snarl.defaultOptions => {
     title: '',
     text: '',
     timeout: 3000,
-    action: null
+    action: null,
+    dismissable: true
 }
 {% endhighlight %}
         
         <h3>Example Options</h3>
+        <p>Note: for user friendliness, most notifications should be dismissable (and they are by default), hence why <code>dismissable</code> is omitted in this example.</p>
 {% highlight javascript %}
 var options = {
     title: 'Snarl Notification',
     text: 'Hello, world! This is an example notification.',
     timeout: 5000,
-    action: function() {
+    action: function(id) {
         // do relevant action in web app
-        console.log('Example notification was clicked!');
+        console.log('Snarl notification ' + id + ' was clicked!');
     }
 };
 {% endhighlight %}
@@ -205,6 +208,7 @@ $('#no-timeout-close').click(function() {
         <p><input id="update-notification-title" class="form-control" placeholder="Notification Title"></p>
         <p><input id="update-notification-text" class="form-control" placeholder="Notification Text"></p>
         <p><input id="update-notification-timeout" class="form-control" placeholder="Notification Timeout (blank = null)"></p>
+        <p><label><input id="update-notification-dismissable" type="checkbox" checked> Dismissable</label></p>
         <p>
             <button id="update-notification-open" class="waves-effect waves-button waves-light">Open/Edit Notification</button>
             <button id="update-notification-close" class="waves-effect waves-button waves-light close-button">Close Notification</button>
@@ -216,16 +220,20 @@ $('#no-timeout-close').click(function() {
             function options() {
                 var title = $('#update-notification-title').val(),
                     text = $('#update-notification-text').val(),
-                    timeout = $('#update-notification-timeout').val();
+                    timeout = $('#update-notification-timeout').val(),
+                    dismissable = $('#update-notification-dismissable').prop('checked');
 
                 if (title === '') title = 'Notification Title';
                 if (text === '') text = 'Notification Text';
                 if (timeout === '') timeout = null;
 
+                console.debug(dismissable);
+
                 return {
                     title: title,
                     text: text,
-                    timeout: timeout
+                    timeout: timeout,
+                    dismissable: dismissable
                 };
             }
 
@@ -306,7 +314,7 @@ $('#snarl-callback-string').click(function() {
 {% endhighlight %}
 
         <h3>Action: Callback Function</h3>
-        <p>This example makes the notification update itself once clicked. The function is passed no arguments (subject to change in future releases), and has the potential to work with JS MVC frameworks too. Note that if the dismiss button is pressed, then no callback is triggered (subject to change).</p>
+        <p>This example makes the notification update itself once clicked. The function is passed the notification id as an argument, and has the potential to work with JS MVC frameworks too. Note that if the dismiss button is pressed, then no callback is triggered (subject to change).</p>
         <p><button id="snarl-callback-function" class="waves-effect waves-button waves-light">Open Notification</button></p>
         <script>
             $('#snarl-callback-function').click(function() {
@@ -314,11 +322,11 @@ $('#snarl-callback-string').click(function() {
                     title: 'Snarl Notification #' + (Snarl.count + 1),
                     text: 'Hello, world! Click this notification.',
                     timeout: null,
-                    action: function() {
+                    action: function(id) {
                         Snarl.editNotification(id, {
                             text: 'You clicked the notification! Click once more, click the dismiss button, or wait 8000ms to close it.',
                             timeout: 8000,
-                            action: function() {
+                            action: function(id) {
                                 Snarl.removeNotification(id);
                             }
                         });
@@ -332,11 +340,11 @@ $('#snarl-callback-function').click(function() {
         title: 'Snarl Notification #' + (Snarl.count + 1),
         text: 'Hello, world! Click this notification.',
         timeout: null,
-        action: function() {
+        action: function(id) {
             Snarl.editNotification(id, {
                 text: 'You clicked the notification! Click once more, click the dismiss button, or wait 8000ms to close it.',
                 timeout: 8000,
-                action: function() {
+                action: function(id) {
                     Snarl.removeNotification(id);
                 }
             });

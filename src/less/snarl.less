@@ -50,7 +50,12 @@
         font: @text-font;
     }
 
-    //TODO: refactor/clean up
+    &.not-dismissable {
+        .snarl-close {
+            display: none;
+        }
+    }
+
     .snarl-close {
         position: absolute;
         top: 0;
