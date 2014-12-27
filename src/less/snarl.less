@@ -31,6 +31,15 @@
     overflow: hidden;
     cursor: pointer;
 
+    pointer-events: all;
+
+    background: @background-color;
+    //FUTURE: metallic notifications?
+    box-shadow:
+        0 2px 2px rgba(0,0,0,0.25),
+        0 0 20px rgba(0,0,0,0.05) inset;
+    border-radius: 5px;
+    
     opacity:0;
     left:400px;
 
@@ -49,28 +58,20 @@
         transition:opacity (@time * 0.8) ease-out (@time * 0.2), left @time ease-out;
     }
 
-    pointer-events: all;
-
-    background: @background-color;
-    //FUTURE: metallic notifications?
-    box-shadow:
-        0 2px 2px rgba(0,0,0,0.25),
-        0 0 20px rgba(0,0,0,0.05) inset;
-    border-radius: 5px;
-
-    h3 {
-        margin: 0;
-        font: @title-font;
-    }
-
-    p {
-        margin: 3px 0 0;
-        font: @text-font;
-    }
-
     &.not-dismissable {
+        padding: 20px;
+        
         .snarl-close {
             display: none;
+        }
+    }
+    
+    &.no-hover:not(.not-dismissable) {
+        padding: 20px 100px 20px 20px;
+        
+        .snarl-close {
+            opacity: 1;
+            box-shadow: none;
         }
     }
 
@@ -113,4 +114,15 @@
     &:hover .snarl-close {
         opacity:1;
     }
+    
+    h3 {
+        margin: 0;
+        font: @title-font;
+    }
+
+    p {
+        margin: 3px 0 0;
+        font: @text-font;
+    }
 }
+

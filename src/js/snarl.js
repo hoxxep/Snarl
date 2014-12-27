@@ -103,6 +103,11 @@
                 addClass(element, 'inbound');
                 element.removeAttribute('style'); //clear reminants of the remove animation
             }, 0);
+            
+            // no hover if touch device
+            if (isTouchDevice()) {
+                addClass(element, 'no-hover');
+            }
 
             Snarl.notifications[id].options = options;
         },
@@ -266,6 +271,14 @@
     function removeClass(element, className) {
         var classPattern = new RegExp('(?:^|\\s)' + className + '(?!\\S)', 'g');
         element.className = element.className.replace(classPattern, '');
+    }
+    
+    /**
+     * Check whether the dismiss button needs to be permanently visible
+     * http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
+     */
+    function isTouchDevice() {
+        return ('ontouchstart' in window || 'onmsgesturechange' in window);
     }
 
 
