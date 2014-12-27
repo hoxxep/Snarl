@@ -20,7 +20,7 @@ title: Snarl - Growl notifications for your web app
     <script src="static/snarl.js"></script>
 </head>
 <body>
-    <header class="jumbotron">
+    <header class="jumbotron waves-effect waves-light">
         <h1>Snarl</h1>
         <p>Growl-style notifications for your web app.</p>
         <p>v0.1.0 - github.com/hoxxep/Snarl</p>
@@ -54,7 +54,63 @@ title: Snarl - Growl notifications for your web app
             <li>setText(id, text)</li>
             <li>setTimeout(id, timeout)</li>
         </ul>
-
+        
+        <h2>Common Function Arguments</h2>
+        <!-- TODO: prettify this -->
+        <h3>Argument: id</h3>
+        The <code>id</code> is the string which maps to a Snarl notification. <code>id</code>s are generated and returned automatically when using <code>.addNotification(options)</code>.
+        
+        <h3>Argument: options</h3>
+        <p><code>title</code>: String - title of the notification.</p>
+        <p><code>text</code>: String - description part of the notification.</p>
+        <p><code>timeout</code>: Integer/null</p>
+        <ul>
+            <li>Integer: timeout of notification in milliseconds</li>
+            <li>null: no timeout</li>
+        </ul>
+        <p><code>action</code>: String/Function/null</p>
+        <ul>
+            <li>String: url of page to visit if notification is clicked</li>
+            <li>Function: callback function to run on notification click</li>
+            <li>null: no callback/action when clicked</li>
+        </ul>
+        
+        <h3>Default Options</h3>
+{% highlight javascript %}
+Snarl.defaultOptions => {
+    title: '',
+    text: '',
+    timeout: 3000,
+    action: null
+}
+{% endhighlight %}
+        
+        <h3>Example Options</h3>
+{% highlight javascript %}
+var options = {
+    title: 'Snarl Notification',
+    text: 'Hello, world! This is an example notification.',
+    timeout: 5000,
+    action: function() {
+        // do relevant action in web app
+        console.log('Example notification was clicked!');
+    }
+};
+{% endhighlight %}
+        
+        <h2>Snarl Methods</h2>
+        <h3>.addNotification(options) : String id</h3>
+        <p>do stuff</p>
+        
+        <h3>.editNotification(id, options)</h3>
+        <h3>.reOpenNotification(id)</h3>
+        <h3>.removeNotification(id) : Boolean successful</h3>
+        <h3>.isDismissed(id) : Boolean dismissed</h3>
+        <h3>.exists(id) : Boolean exists</h3>
+        <h3>.setTitle(id, title)</h3>
+        <h3>.setText(id, text)</h3>
+        <h3>.setTimeout(id, timeout)</h3>
+        
         <h1>Snarl Notification Demos</h1>
         <p><strong>Note:</strong> Snarl itself does not require jQuery as a dependency, but these examples use jQuery to wire up the click events for clarity.</p>
         <!-- TODO: proper links and contents (sticky side-nav?) -->

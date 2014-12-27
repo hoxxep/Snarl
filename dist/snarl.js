@@ -93,8 +93,9 @@
         },
 
         removeNotification: function(id) {
-            if (Snarl.notifications[id].element.parentElement !== null) {
-                var notification = document.getElementById('snarl-notification-' + id);
+            if (!Snarl.isDismissed(id)) {
+                //var notification = document.getElementById('snarl-notification-' + id);
+                var notification = Snarl.notifications[id].element;
                 notification.parentElement.removeChild(notification);
                 clearTimeout(Snarl.notifications[id].timer);
                 Snarl.notifications[id].active = false;
