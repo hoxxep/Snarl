@@ -31,6 +31,20 @@
     overflow: hidden;
     cursor: pointer;
 
+    opacity:0;
+    left:400px;
+
+    // outbound transition
+    transition:opacity 0.3s ease, left 0.5s ease-in, margin 0.5s ease;
+
+    &.inbound {
+        opacity:1;
+        left:0;
+
+        // inbound transition
+        transition:opacity 0.3s ease-out 0.2s, left 0.5s ease-out;
+    }
+
     pointer-events: all;
 
     background: @background-color;

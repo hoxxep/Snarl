@@ -15,7 +15,6 @@
 
     //TODO: add success, error, warning, and custom icons?
     //TODO: add errors when id not found (IndexError?)
-    //TODO: add not dismissable option
     //TODO: merge addNotification and reopenNotification
     // into a single openNotification(id, options) class?
     // eg. if no notification exists for id then create a new
@@ -54,6 +53,11 @@
         },
 
         editNotification: function(id, options) {
+            if (Snarl.notifications[id].removeTimer !== null) {
+                clearTimeout(Snarl.notifications[id].removeTimer);
+                Snarl.notifications[id].removeTimer = null;
+            }
+
             addNotificationHTML(id);
 
             options = options || {};
@@ -94,6 +98,12 @@
                 addClass(element, 'not-dismissable');
             }
 
+            // Animate: and yes, it needs to be in a setTimeout for the CSS3 animation to work.
+            setTimeout(function() {
+                addClass(element, 'inbound');
+                element.removeAttribute('style'); //clear reminants of the remove animation
+            }, 0);
+
             Snarl.notifications[id].options = options;
         },
 
@@ -103,11 +113,16 @@
 
         removeNotification: function(id) {
             if (!Snarl.isDismissed(id)) {
-                //var notification = document.getElementById('snarl-notification-' + id);
                 var notification = Snarl.notifications[id].element;
-                notification.parentElement.removeChild(notification);
+
+                // animation [& collapse margin]
+                removeClass(notification, 'inbound');
+                notification.style.marginBottom = (-notification.offsetHeight) + 'px';
+                Snarl.notifications[id].removeTimer = setTimeout(function() {
+                    notification.parentElement.removeChild(notification);
+                }, 500);
+
                 clearTimeout(Snarl.notifications[id].timer);
-                Snarl.notifications[id].active = false;
                 return true;
             } else {
                 return false;  //false if failed to remove
