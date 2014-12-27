@@ -34,15 +34,19 @@
     opacity:0;
     left:400px;
 
+    // total time taken for transition
+    // note that snarl.js removes notification after 1s
+    @time: 0.35s;
+
     // outbound transition
-    transition:opacity 0.3s ease, left 0.5s ease-in, margin 0.5s ease;
+    transition:opacity (@time * 0.6) ease, left @time ease-in, margin @time ease;
 
     &.inbound {
         opacity:1;
         left:0;
 
         // inbound transition
-        transition:opacity 0.3s ease-out 0.2s, left 0.5s ease-out;
+        transition:opacity (@time * 0.8) ease-out (@time * 0.2), left @time ease-out;
     }
 
     pointer-events: all;

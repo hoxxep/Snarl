@@ -5,6 +5,7 @@ title: Snarl - Growl notifications for your web app
 <html>
 <head>
     <title>Snarl Web Notifications</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- styles -->
     <link rel="stylesheet" type="text/css" href="static/normalize.css">
@@ -259,7 +260,8 @@ $('#no-timeout-close').click(function() {
 function options() {
     var title = $('#update-notification-title').val(),
         text = $('#update-notification-text').val(),
-        timeout = $('#update-notification-timeout').val();
+        timeout = $('#update-notification-timeout').val(),
+        dismissable = $('#update-notification-dismissable').prop('checked');
 
     if (title === '') title = 'Notification Title';
     if (text === '') text = 'Notification Text';
@@ -268,7 +270,8 @@ function options() {
     return {
         title: title,
         text: text,
-        timeout: timeout
+        timeout: timeout,
+        dismissable: dismissable
     };
 }
 
