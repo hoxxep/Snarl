@@ -18,6 +18,8 @@
     bottom: @bottom;
     left: @left;
     width: 320px;
+    
+    z-index: 100;
 
     pointer-events: none;
 }
@@ -126,3 +128,28 @@
     }
 }
 
+@media screen and (max-width: 480px) {
+    #snarl-wrapper {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    
+        .snarl-notification {
+            margin: 0;
+            padding: 10px 90px 10px 10px;
+            border-radius: 0;
+            box-shadow: none;
+            border-top: 1px solid #ccc;
+            
+            .snarl-close {
+                box-shadow: none;
+                opacity: 1;
+            }
+            
+            h3 {
+                font-size:1.2em;
+            }
+        }
+    }
+}

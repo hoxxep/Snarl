@@ -122,7 +122,12 @@
 
                 // animation [& collapse margin]
                 removeClass(notification, 'inbound');
-                notification.style.marginBottom = (-notification.offsetHeight) + 'px';
+                if (document.body.clientWidth > 480) {
+                    notification.style.marginBottom = (-notification.offsetHeight) + 'px';
+                } else {
+                    notification.style.marginTop = (-notification.offsetHeight) + 'px';
+                }
+
                 Snarl.notifications[id].removeTimer = setTimeout(function() {
                     notification.parentElement.removeChild(notification);
                 }, 500);
@@ -237,7 +242,12 @@
             Snarl.notifications[id].element = notificationWrapper;
         }
         if (Snarl.notifications[id].element.parentElement === null) {
-            document.getElementById('snarl-wrapper').appendChild(Snarl.notifications[id].element);
+            var wrapper = document.getElementById('snarl-wrapper');
+            if (document.body.clientWidth > 480) {
+                wrapper.appendChild(Snarl.notifications[id].element);
+            } else {
+                wrapper.insertBefore(Snarl.notifications[id].element, wrapper.firstChild);
+            }
         }
     }
 

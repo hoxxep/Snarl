@@ -5,6 +5,7 @@
   bottom: auto;
   left: auto;
   width: 320px;
+  z-index: 100;
   pointer-events: none;
 }
 .snarl-notification {
@@ -82,4 +83,26 @@
 .snarl-notification p {
   margin: 3px 0 0;
   font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+@media screen and (max-width: 480px) {
+  #snarl-wrapper {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  #snarl-wrapper .snarl-notification {
+    margin: 0;
+    padding: 10px 90px 10px 10px;
+    border-radius: 0;
+    box-shadow: none;
+    border-top: 1px solid #ccc;
+  }
+  #snarl-wrapper .snarl-notification .snarl-close {
+    box-shadow: none;
+    opacity: 1;
+  }
+  #snarl-wrapper .snarl-notification h3 {
+    font-size: 1.2em;
+  }
 }
