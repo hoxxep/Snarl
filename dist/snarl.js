@@ -1,3 +1,12 @@
+/*!
+ * Snarl v0.1.0 alpha
+ * http://hoxxep.github.io/Snarl
+ * 
+ * Copyright 2014 Liam Gray and other contributors 
+ * Released under the MIT license 
+ * https://github.com/hoxxep/Snarl/blob/master/LICENSE 
+ */
+
 ;(function (window, document) {
     'use strict';
 
