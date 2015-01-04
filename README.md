@@ -5,9 +5,9 @@ Growl style notifications for your web app.
 
 ## Documentation
 
-Snarl is using Jekyll to generate documentation. TODO: add some basic getting started info into readme.
+Snarl is using Jekyll to generate the documentation site.
 
-For now, check the (unfinished) site at [hoxxep.github.io/Snarl](https://hoxxep.github.io/Snarl) for usage docs.
+For now, check the (currently unfinished) site at [hoxxep.github.io/Snarl](https://hoxxep.github.io/Snarl) for usage docs.
 
 
 ## License

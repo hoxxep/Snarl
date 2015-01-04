@@ -1,5 +1,5 @@
 /*!
- * Snarl v0.1.0
+ * Snarl v0.1.1
  * http://hoxxep.github.io/Snarl
  * 
  * Copyright 2014 Liam Gray and other contributors 
