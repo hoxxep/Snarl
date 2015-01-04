@@ -88,11 +88,14 @@
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
+  font-size: 1.4em;
 }
 .snarl-notification p {
   margin: 3px 0 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
+  font-size: 1em;
+  line-height: 1.25em;
 }
 @media screen and (max-width: 480px) {
   #snarl-wrapper {
