@@ -19,7 +19,33 @@ header.jumbotron {
     border-top:none;
     border-bottom:none;
     margin:20px auto;
-    padding:30px;
+    padding:5px 30px 5px;
+
+    h1 {
+        margin-top: 30px;
+        padding-top: 30px;
+        border-top: 3px solid #eee;
+
+        &:first-child {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+    }
+
+    h2 {
+        padding-bottom:5px;
+        border-bottom: 1px solid #eee;
+    }
+
+    h2, h3 {
+        margin-top: 30px;
+    }
+
+    h1 + h2,
+    h2 + h3 {
+        margin-top:15px;
+    }
 }
 
 .waves-button {
