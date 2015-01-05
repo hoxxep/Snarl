@@ -68,14 +68,6 @@
         // inbound transition
         transition:opacity (@time * 0.8) ease-out (@time * 0.2), left @time ease-out;
     }
-
-    &.not-dismissable {
-        padding: 20px;
-        
-        .snarl-close {
-            display: none;
-        }
-    }
     
     &.no-hover:not(.not-dismissable) {
         padding: 20px 100px 20px 20px;
@@ -83,6 +75,14 @@
         .snarl-close {
             opacity: 1;
             box-shadow: none;
+        }
+    }
+
+    &.not-dismissable {
+        padding: 20px;
+
+        .snarl-close {
+            display: none;
         }
     }
 

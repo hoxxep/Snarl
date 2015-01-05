@@ -37,18 +37,18 @@
   left: 0;
   transition: opacity 0.28s ease-out 0.07s, left 0.35s ease-out;
 }
-.snarl-notification.not-dismissable {
-  padding: 20px;
-}
-.snarl-notification.not-dismissable .snarl-close {
-  display: none;
-}
 .snarl-notification.no-hover:not(.not-dismissable) {
   padding: 20px 100px 20px 20px;
 }
 .snarl-notification.no-hover:not(.not-dismissable) .snarl-close {
   opacity: 1;
   box-shadow: none;
+}
+.snarl-notification.not-dismissable {
+  padding: 20px;
+}
+.snarl-notification.not-dismissable .snarl-close {
+  display: none;
 }
 .snarl-notification .snarl-close {
   position: absolute;
