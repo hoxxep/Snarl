@@ -1,6 +1,6 @@
 {
   "name": "Snarl",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Web Notifications based on Growl",
   "author": "Liam Gray <hoxxep@gmail.com>",
   "main": "snarl.min.js",
