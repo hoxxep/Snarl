@@ -43,7 +43,7 @@ gulp.task('uglify', function() {
         .pipe(gulp.dest('./docs/static'));
 });
 
-// Fail if jshint fails to stop uglify crashing
+// Fail if jshint fails to stop gulp+suglify crashing
 gulp.task('js', function() {
     sequence('jshint', 'uglify');
 });
