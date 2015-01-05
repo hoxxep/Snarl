@@ -11,6 +11,17 @@ header.jumbotron {
     color: #fff;
     text-align:center;
     width:100%;
+
+    .subtitle {
+        margin-bottom:0;
+        font-weight:300;
+    }
+
+    .version {
+        font-size:1.1em;
+        font-weight:300;
+        opacity: 0.8;
+    }
 }
 
 #wrapper {
@@ -52,7 +63,7 @@ header.jumbotron {
     color:#fff;
     background:#3697dd;
 
-    &:hover {
+    &:hover, &:focus {
         color:#fff;
         background:#6ba9de;
     }
@@ -64,7 +75,19 @@ header.jumbotron {
             background:#e25772;
         }
     }
+
+    &.big-button {
+        font-size: 1.2em;
+        font-weight: 400;
+    }
+
+    &#snarl-github {
+        background:#f6f6f6;
+        color: #333;
+        font-size:1em;
+    }
 }
+
 
 footer {
     width:100%;
