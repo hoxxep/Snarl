@@ -1,6 +1,6 @@
 {
   "name": "Snarl",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "https://hoxxep.github.io/Snarl",
   "authors": [
     "Liam Gray <hoxxep@gmail.com>"
@@ -9,7 +9,7 @@
   "main": "dist/snarl.min.js",
   "keywords": [
     "notifications",
-    "growl"
+    "gulp"
   ],
   "license": "MIT",
   "ignore": [
@@ -17,10 +17,12 @@
     "node_modules",
     "bower_components",
     "src",
-    "test",
-    "tests",
-    "Gruntfile.js",
+    "gulpfile.js",
     "package.json",
-    "README.md"
+    "README.md",
+    "docs",
+    "dist.sh",
+    "_config.yml",
+    "_site"
   ]
 }

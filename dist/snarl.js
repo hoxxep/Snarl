@@ -1,5 +1,5 @@
 /*!
- * Snarl v0.1.2
+ * Snarl v0.1.3
  * http://hoxxep.github.io/Snarl
  * 
  * Copyright 2014 Liam Gray and other contributors 
@@ -243,10 +243,10 @@
             Snarl.notifications[id] = {};
         }
         if (Snarl.notifications[id].element === null || Snarl.notifications[id].element === undefined) {
-            var notificationContent = '<h3 class="snarl-title"></h3><p class="snarl-text"></p><div class="snarl-close"><!--<i class="fa fa-close"></i>-->' + snarlCloseSVG + '</div>',
+            var notificationContent = '<h3 class="snarl-title"></h3><p class="snarl-text"></p><div class="snarl-close waves-effect"><!--<i class="fa fa-close"></i>-->' + snarlCloseSVG + '</div>',
                 notificationWrapper = document.createElement('div');
             notificationWrapper.innerHTML = notificationContent;
-            addClass(notificationWrapper,'snarl-notification');
+            addClass(notificationWrapper,'snarl-notification waves-effect');
             notificationWrapper.setAttribute('id', 'snarl-notification-' + id);
             Snarl.notifications[id].element = notificationWrapper;
         }

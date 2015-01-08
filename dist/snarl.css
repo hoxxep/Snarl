@@ -1,5 +1,5 @@
 /*!
- * Snarl v0.1.2
+ * Snarl v0.1.3
  * http://hoxxep.github.io/Snarl
  * 
  * Copyright 2014 Liam Gray and other contributors 
@@ -49,6 +49,13 @@
 }
 .snarl-notification.not-dismissable .snarl-close {
   display: none;
+}
+.snarl-notification.waves-effect .waves-ripple {
+  z-index: 3;
+  background: -webkit-radial-gradient(rgba(0, 0, 0, 0.05) 0, rgba(0, 0, 0, 0.075) 40%, rgba(0, 0, 0, 0.12) 50%, rgba(0, 0, 0, 0.15) 60%, rgba(255, 255, 255, 0) 70%);
+  background: -moz-radial-gradient(rgba(0, 0, 0, 0.05) 0, rgba(0, 0, 0, 0.075) 40%, rgba(0, 0, 0, 0.12) 50%, rgba(0, 0, 0, 0.15) 60%, rgba(255, 255, 255, 0) 70%);
+  background: -o-radial-gradient(rgba(0, 0, 0, 0.05) 0, rgba(0, 0, 0, 0.075) 40%, rgba(0, 0, 0, 0.12) 50%, rgba(0, 0, 0, 0.15) 60%, rgba(255, 255, 255, 0) 70%);
+  background: radial-gradient(rgba(0, 0, 0, 0.05) 0, rgba(0, 0, 0, 0.075) 40%, rgba(0, 0, 0, 0.12) 50%, rgba(0, 0, 0, 0.15) 60%, rgba(255, 255, 255, 0) 70%);
 }
 .snarl-notification .snarl-close {
   position: absolute;
