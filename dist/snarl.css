@@ -1,10 +1,11 @@
 /*!
- * Snarl v0.1.3
- * http://hoxxep.github.io/Snarl
- * 
- * Copyright 2014 Liam Gray and other contributors 
- * Released under the MIT license 
- * https://github.com/hoxxep/Snarl/blob/master/LICENSE 
+ * Snarl - Web Notifications based on Growl
+ * @version v0.1.3
+ * @link https://hoxxep.github.io/Snarl
+ *
+ * Copyright 2014-2015 <%= pkg.author =>
+ * Released under the MIT license
+ * @license https://github.com/hoxxep/Snarl/blob/master/LICENSE 
  */
 #snarl-wrapper {
   position: fixed;
@@ -52,10 +53,10 @@
 }
 .snarl-notification.waves-effect .waves-ripple {
   z-index: 3;
-  background: -webkit-radial-gradient(rgba(0, 0, 0, 0.05) 0, rgba(0, 0, 0, 0.075) 40%, rgba(0, 0, 0, 0.12) 50%, rgba(0, 0, 0, 0.15) 60%, rgba(255, 255, 255, 0) 70%);
-  background: -moz-radial-gradient(rgba(0, 0, 0, 0.05) 0, rgba(0, 0, 0, 0.075) 40%, rgba(0, 0, 0, 0.12) 50%, rgba(0, 0, 0, 0.15) 60%, rgba(255, 255, 255, 0) 70%);
-  background: -o-radial-gradient(rgba(0, 0, 0, 0.05) 0, rgba(0, 0, 0, 0.075) 40%, rgba(0, 0, 0, 0.12) 50%, rgba(0, 0, 0, 0.15) 60%, rgba(255, 255, 255, 0) 70%);
-  background: radial-gradient(rgba(0, 0, 0, 0.05) 0, rgba(0, 0, 0, 0.075) 40%, rgba(0, 0, 0, 0.12) 50%, rgba(0, 0, 0, 0.15) 60%, rgba(255, 255, 255, 0) 70%);
+  background: -webkit-radial-gradient(rgba(0, 0, 0, 0.05) 0, rgba(0, 0, 0, 0.075) 40%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 60%, rgba(255, 255, 255, 0) 70%);
+  background: -moz-radial-gradient(rgba(0, 0, 0, 0.05) 0, rgba(0, 0, 0, 0.075) 40%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 60%, rgba(255, 255, 255, 0) 70%);
+  background: -o-radial-gradient(rgba(0, 0, 0, 0.05) 0, rgba(0, 0, 0, 0.075) 40%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 60%, rgba(255, 255, 255, 0) 70%);
+  background: radial-gradient(rgba(0, 0, 0, 0.05) 0, rgba(0, 0, 0, 0.075) 40%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 60%, rgba(255, 255, 255, 0) 70%);
 }
 .snarl-notification .snarl-close {
   position: absolute;

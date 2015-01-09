@@ -4,10 +4,26 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     less = require('gulp-less'),
     jshint_stylish = require('jshint-stylish'),
-    sequence = require('run-sequence');
+    sequence = require('run-sequence'),
+    header = require('gulp-header'),
+    pkg = require('./package.json'),
+    banner = [
+        '/*!',
+        ' * <%= pkg.name %> - <%= pkg.description %>',
+        ' * @version v<%= pkg.version %>',
+        ' * @link <%= pkg.homepage %>',
+        ' *',
+        ' * Copyright 2014-2015 <%= pkg.author =>',
+        ' * Released under the MIT license',
+        ' * @license https://github.com/hoxxep/Snarl/blob/master/LICENSE ',
+        ' */',
+        '',
+        ''
+    ].join('\n');
 
 gulp.task('less-src', function() {
     return gulp.src('src/less/snarl.less')
+        .pipe(header(banner, {pkg: pkg}))
         .pipe(gulp.dest('./dist'))
         .pipe(less())
         .pipe(gulp.dest('./dist'))
@@ -35,6 +51,7 @@ gulp.task('jshint', function() {
 //TODO: sourcemaps
 gulp.task('uglify', function() {
     return gulp.src('src/js/snarl.js')
+        .pipe(header(banner, {pkg: pkg}))
         .pipe(gulp.dest('./dist'))
         .pipe(gulp.dest('./docs/static'))
         .pipe(uglify({mangle:true, preserveComments:'some'}))
