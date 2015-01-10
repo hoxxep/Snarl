@@ -3,7 +3,7 @@
  * @version v0.1.3
  * @link https://hoxxep.github.io/Snarl
  *
- * Copyright 2014-2015 <%= pkg.author =>
+ * Copyright 2014-2015 Liam Gray <hoxxep@gmail.com>
  * Released under the MIT license
  * @license https://github.com/hoxxep/Snarl/blob/master/LICENSE 
  */

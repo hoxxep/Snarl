@@ -3,13 +3,17 @@
 @title-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 @text-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
+@padding: 15px;
+
 //Position:
 @top: 20px;
 @right: 20px;
 @bottom: auto;
 @left: auto;
+@width: 380px;
 
 //TODO: animation in/out options
+//TODO: make a basic theme to allow users to theme their notifications
 
 #snarl-wrapper {
     position: fixed;
@@ -17,7 +21,7 @@
     right: @right;
     bottom: @bottom;
     left: @left;
-    width: 320px;
+    width: @width;
     
     z-index: 100;
 
@@ -27,7 +31,7 @@
 .snarl-notification {
     box-sizing: border-box;
     width: 100%;
-    padding: 20px;
+    padding: @padding;
     margin:0 0 10px;
     position: relative;
     overflow: hidden;
@@ -36,10 +40,9 @@
     pointer-events: all;
 
     background: @background-color;
-    //FUTURE: metallic notifications?
     box-shadow:
         0 2px 2px rgba(0,0,0,0.25),
-        0 0 20px rgba(0,0,0,0.05) inset;
+        0 0 @padding rgba(0,0,0,0.05) inset;
     border-radius: 5px;
     
     opacity:0;
@@ -61,7 +64,7 @@
     }
     
     &.no-hover:not(.not-dismissable) {
-        padding: 20px 100px 20px 20px;
+        padding: @padding (80px + @padding) @padding @padding;
         
         .snarl-close {
             opacity: 1;
@@ -70,22 +73,10 @@
     }
 
     &.not-dismissable {
-        padding: 20px;
+        padding: @padding;
 
         .snarl-close {
             display: none;
-        }
-    }
-
-    &.waves-effect {
-        .waves-ripple {
-            z-index: 3;
-
-            @gradient: rgba(0,0,0,0.05) 0,rgba(0,0,0,.075) 40%,rgba(0,0,0,.1) 50%,rgba(0,0,0,.1) 60%,rgba(255,255,255,0) 70%;
-            background: -webkit-radial-gradient(@gradient);
-            background: -moz-radial-gradient(@gradient);
-            background: -o-radial-gradient(@gradient);
-            background: radial-gradient(@gradient);
         }
     }
 
@@ -142,6 +133,19 @@
         font-weight: 300;
         font-size: 1em;
         line-height: 1.25em;
+    }
+
+    // support for Waves > http://fian.my.id/Waves/
+    &.waves-effect {
+        .waves-ripple {
+            z-index: 3;
+
+            @gradient: rgba(0,0,0,0.05) 0,rgba(0,0,0,.075) 40%,rgba(0,0,0,.1) 50%,rgba(0,0,0,.1) 60%,rgba(255,255,255,0) 70%;
+            background: -webkit-radial-gradient(@gradient);
+            background: -moz-radial-gradient(@gradient);
+            background: -o-radial-gradient(@gradient);
+            background: radial-gradient(@gradient);
+        }
     }
 }
 
