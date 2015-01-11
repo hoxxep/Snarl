@@ -1,7 +1,7 @@
 /*!
  * Snarl - Web Notifications based on Growl
  * @version v0.1.3
- * @link https://hoxxep.github.io/Snarl
+ * @link https://hoxxep.github.io/snarl
  *
  * Copyright 2014-2015 Liam Gray <hoxxep@gmail.com>
  * Released under the MIT license
