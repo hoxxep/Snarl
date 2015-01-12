@@ -47,7 +47,7 @@
             addNotificationHTML(id);
             Snarl.editNotification(id, options);
 
-            return id;  // allow 3rd party code to track notification
+            return id;
         },
 
         editNotification: function(id, options) {
@@ -133,7 +133,7 @@
                 clearTimeout(Snarl.notifications[id].timer);
                 return true;
             } else {
-                return false;  //false if failed to remove
+                return false;  //failed to remove
             }
         },
 
@@ -211,7 +211,7 @@
             if (action === undefined || action === null) {
                 return;
             } else if (typeof action === "string") {
-                //TODO: handle url actions better
+                //TODO: allow relative urls too
                 window.location = action;
             } else if (typeof action === "function") {
                 action(id);
