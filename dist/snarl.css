@@ -86,13 +86,16 @@
   opacity: 1;
 }
 .snarl-notification h3 {
-  margin: 0;
+  margin: 0 0 3px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 1.4em;
 }
+.snarl-notification.snarl-no-title h3 {
+  display: none;
+}
 .snarl-notification p {
-  margin: 3px 0 0;
+  margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   font-size: 1em;

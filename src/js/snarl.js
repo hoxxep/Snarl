@@ -69,7 +69,14 @@
             var element = Snarl.notifications[id].element;
 
             //** Title
-            element.getElementsByClassName('snarl-title')[0].textContent = options.title;
+            var title = element.getElementsByClassName('snarl-title')[0];
+            if (options.title) {
+                title.textContent = options.title;
+                removeClass(element, 'snarl-no-title');
+            } else {
+                title.textContent = '';
+                addClass(element, 'snarl-no-title');
+            }
 
             //** Text
             element.getElementsByClassName('snarl-text')[0].textContent = options.text;
