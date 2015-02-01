@@ -1,6 +1,6 @@
 /*!
  * Snarl - Web Notifications based on Growl
- * @version v0.1.3
+ * @version v0.2.0
  * @link https://hoxxep.github.io/snarl
  *
  * Copyright 2014-2015 Liam Gray <hoxxep@gmail.com>
@@ -11,20 +11,7 @@
 ;(function (window, document) {
     'use strict';
 
-    /**
-
-    Options
-    -------
-    title: set title of notification
-    text: description text
-    timeout: time in ms | null; for no timeout
-    action: string/url | function/callback; action when notification clicked
-    dismissable: bool; if dismiss button is allowed on notification
-
-    */
-
     //TODO: add success, error, warning, and custom icons?
-    //TODO: add errors when id not found (IndexError?)
     //TODO: merge addNotification and reopenNotification
     // into a single openNotification(id, options) class?
     // eg. if no notification exists for id then create a new
@@ -34,7 +21,9 @@
 
     var Snarl = Snarl || {};
 
-    /** Public object */
+    /** 
+     * Public object
+     */
     Snarl = {
         count: 0,
         notifications: {},
@@ -49,7 +38,17 @@
         setDefaultOptions: function(options) {
             Snarl.defaultOptions = mergeOptions(Snarl.defaultOptions, options);
         },
-
+        
+        setNotificationHTML: function(html_string) {
+            // turn string into HTML element
+            var temp = document.createElement('div');
+            temp.innerHTML = html_string;
+            var notificationHTML = temp.firstChild;
+            temp.removeChild(notificationHTML);
+            
+            notificationHtmlTemplate = notificationHTML;
+        },
+        
         addNotification: function(options) {
             Snarl.count += 1;
             var id = makeID();
@@ -89,7 +88,14 @@
             }
 
             //** Text
-            element.getElementsByClassName('snarl-text')[0].textContent = options.text;
+            var text = element.getElementsByClassName('snarl-text')[0];
+            if (options.text) {
+                text.textContent = options.text;
+                removeClass(element, 'snarl-no-text');
+            } else {
+                text.textContent = '';
+                addClass(element, 'snarl-no-text');
+            }
 
             //** Timeout
             if (options.timer !== null) {
@@ -228,7 +234,7 @@
             if (action === undefined || action === null) {
                 return;
             } else if (typeof action === "string") {
-                //TODO: allow relative urls too
+                //TODO: allow relative urls too?
                 window.location = action;
             } else if (typeof action === "function") {
                 action(id);
@@ -239,25 +245,27 @@
         }
     }
 
-    var snarlCloseSVG = '<svg class="snarl-close-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve" height="100px" width="100px"><g><path d="M49.5,5c-24.9,0-45,20.1-45,45s20.1,45,45,45s45-20.1,45-45S74.4,5,49.5,5z M71.3,65.2c0.3,0.3,0.5,0.7,0.5,1.1   s-0.2,0.8-0.5,1.1L67,71.8c-0.3,0.3-0.7,0.5-1.1,0.5s-0.8-0.2-1.1-0.5L49.5,56.6L34.4,71.8c-0.3,0.3-0.7,0.5-1.1,0.5   c-0.4,0-0.8-0.2-1.1-0.5l-4.3-4.4c-0.3-0.3-0.5-0.7-0.5-1.1c0-0.4,0.2-0.8,0.5-1.1L43,49.9L27.8,34.9c-0.6-0.6-0.6-1.6,0-2.3   l4.3-4.4c0.3-0.3,0.7-0.5,1.1-0.5c0.4,0,0.8,0.2,1.1,0.5l15.2,15l15.2-15c0.3-0.3,0.7-0.5,1.1-0.5s0.8,0.2,1.1,0.5l4.3,4.4   c0.6,0.6,0.6,1.6,0,2.3L56.1,49.9L71.3,65.2z"/></g></svg>';
-
 
     /**
      * Injects base notification html to document if it's
      * not been added yet.
      */
+    var notificationHtmlTemplate = null;
     function addNotificationHTML(id) {
         if (Snarl.notifications[id] === undefined) {
             Snarl.notifications[id] = {};
         }
+        
+        // Generate new HTML into cache
         if (Snarl.notifications[id].element === null || Snarl.notifications[id].element === undefined) {
-            var notificationContent = '<h3 class="snarl-title"></h3><p class="snarl-text"></p><div class="snarl-close waves-effect"><!--<i class="fa fa-close"></i>-->' + snarlCloseSVG + '</div>',
-                notificationWrapper = document.createElement('div');
-            notificationWrapper.innerHTML = notificationContent;
-            addClass(notificationWrapper,'snarl-notification waves-effect');
+            var notificationWrapper = notificationHtmlTemplate.cloneNode(true);
+            
+            addClass(notificationWrapper,'snarl-notification');
             notificationWrapper.setAttribute('id', 'snarl-notification-' + id);
             Snarl.notifications[id].element = notificationWrapper;
         }
+        
+        // Insert HTML
         if (Snarl.notifications[id].element.parentElement === null) {
             var wrapper = document.getElementById('snarl-wrapper');
             if (document.body.clientWidth > 480) {
@@ -310,15 +318,15 @@
 
 
     /*
-     * If library is injected after page has loaded
+     * Initialisation
      */
     function snarlInitialize() {
         var snarlWrapper = document.createElement('div');
         snarlWrapper.setAttribute('id', 'snarl-wrapper');
-
-        // only one event handler thanks to bubbling
         snarlWrapper.addEventListener('click', clickNotification);
         document.body.appendChild(snarlWrapper);
+        
+        Snarl.setNotificationHTML('<div class="snarl-notification waves-effect"><h3 class="snarl-title"></h3><p class="snarl-text"></p><div class="snarl-close waves-effect"><svg class="snarl-close-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve" height="100px" width="100px"><g><path d="M49.5,5c-24.9,0-45,20.1-45,45s20.1,45,45,45s45-20.1,45-45S74.4,5,49.5,5z M71.3,65.2c0.3,0.3,0.5,0.7,0.5,1.1   s-0.2,0.8-0.5,1.1L67,71.8c-0.3,0.3-0.7,0.5-1.1,0.5s-0.8-0.2-1.1-0.5L49.5,56.6L34.4,71.8c-0.3,0.3-0.7,0.5-1.1,0.5   c-0.4,0-0.8-0.2-1.1-0.5l-4.3-4.4c-0.3-0.3-0.5-0.7-0.5-1.1c0-0.4,0.2-0.8,0.5-1.1L43,49.9L27.8,34.9c-0.6-0.6-0.6-1.6,0-2.3   l4.3-4.4c0.3-0.3,0.7-0.5,1.1-0.5c0.4,0,0.8,0.2,1.1,0.5l15.2,15l15.2-15c0.3-0.3,0.7-0.5,1.1-0.5s0.8,0.2,1.1,0.5l4.3,4.4   c0.6,0.6,0.6,1.6,0,2.3L56.1,49.9L71.3,65.2z"/></g></svg></div></div>');
     }
 
     (function () {

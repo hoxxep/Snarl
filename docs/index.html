@@ -24,7 +24,7 @@ title: Snarl - Growl notifications for your web app
     <header class="jumbotron waves-effect waves-light">
         <h1>Snarl</h1>
         <p class="subtitle">Growl-style notifications for your web app.</p>
-        <p class="version">Currently v0.1.3</p>
+        <p class="version">Currently v0.2.0</p>
     </header>
     <div id="wrapper">
         <!-- TODO: nav bar -->
@@ -55,6 +55,7 @@ title: Snarl - Growl notifications for your web app
         <script>
             $('#basic-demo').click(function() {
                 Snarl.addNotification({
+                    title: 'Ahoy there, skipper',
                     text: 'Hello, world!'
                 });
             });
@@ -62,6 +63,7 @@ title: Snarl - Growl notifications for your web app
 {% highlight javascript %}
 $('#basic-demo').click(function() {
     Snarl.addNotification({
+        title: 'Ahoy there, skipper',
         text: 'Hello, world!'
     });
 });
@@ -75,7 +77,7 @@ $('#basic-demo').click(function() {
             $('#custom-timeout-demo').click(function() {
                 Snarl.addNotification({
                     title: 'Custom Timeouts',
-                    text: 'This notification has an 8000ms timeout!',
+                    text: 'This notification has an 8000ms timeout.',
                     timeout: 8000
                 });
             });
@@ -148,8 +150,6 @@ $('#no-timeout-close').click(function() {
                 if (title === '') title = 'Notification Title';
                 if (text === '') text = 'Notification Text';
                 if (timeout === '') timeout = null;
-
-                console.debug(dismissable);
 
                 return {
                     title: title,
@@ -449,6 +449,22 @@ Snarl.setDefaultOptions({
     timeout: null
 });
 {% endhighlight %}
+        
+        <h3>.setNotificationHTML(html_string)</h3>
+        <p>Customise the inner HTML generated for a notification. Notifications automatically have the class <code>.snarl-notification</code> and id <code>#snarl-notification-[id]</code> added. (<code>[id]</code> is the notification ID string returned by <code>.addNotification()</code>).</p>
+        <p><strong>Note:</strong> notifications must have the <code>snarl-title</code>, <code>snarl-text</code>, and <code>snarl-close</code> classes to hold the title and text, and to have a working close button.</p>
+{% highlight javascript %}
+// Example: Very basic custom notification HTML with Waves support and a FontAwesome close icon
+Snarl.setNotificationHTML(
+    '<div class="waves-effect">'
+        '<h3 class="snarl-title"></h3>' +
+        '<p class="snarl-text"></p>' +
+        '<div class="snarl-close waves-effect">' +
+            '<i class="fa fa-close"></i>' +
+        '</div>'
+    '</div>'
+);
+{% endhighlight %}
 
         <h3>.addNotification(options) : String id</h3>
         <p>Open a new notification with the specified options. <strong>Returns</strong> a string that is the notification <code>id</code>.</p>
@@ -513,18 +529,18 @@ Snarl.setTitle(notification, 'Changed the title!');
 // Example: Change the text of our notification
 // Note: this will re-open and/or reset the timeout on our notification
 // to it's current setting.
-Snarl.setTitle(notification, 'Changed the text!');
+Snarl.setText(notification, 'Changed the text!');
 {% endhighlight %}
 
         <h3>.setTimeout(id, timeout)</h3>
         <p>Set the timeout of a notification. Shorthand for <code>.editNotification(id, {timeout: timeout})</code>.</p>
 {% highlight javascript %}
 // Example: Remove the timeout altogether
-Snarl.setTitle(notification, null);
+Snarl.setTimeout(notification, null);
 {% endhighlight %}
 {% highlight javascript %}
 // Example: Make timeout 8000ms
-Snarl.setTitle(notification, 8000);
+Snarl.setTimeout(notification, 8000);
 {% endhighlight %}
 
 

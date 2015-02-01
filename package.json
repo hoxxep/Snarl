@@ -1,9 +1,9 @@
 {
   "name": "Snarl",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Web Notifications based on Growl",
   "author": "Liam Gray <hoxxep@gmail.com>",
-  "main": "snarl.min.js",
+  "main": "src/js/snarl.min.js",
   "devDependencies": {
     "gulp": "^3.8.10",
     "gulp-header": "^1.2.2",
