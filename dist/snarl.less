@@ -40,9 +40,11 @@
 
 .snarl-notification {
     box-sizing: border-box;
+    display:block;
     width: 100%;
+    margin: 0 0 10px;
     padding: @padding;
-    margin:0 0 10px;
+    padding-left: (80px ); //+ @padding
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -130,14 +132,14 @@
         opacity:1;
     }
     
-    h3 {
+    .snarl-title {
         margin: 0;
         font-family: @title-font;
         font-weight: 400;
         font-size: 1.4em;
     }
 
-    p {
+    .snarl-text {
         margin: 0;
         font-family: @text-font;
         font-weight: 300;
@@ -145,20 +147,57 @@
         line-height: 1.25em;
     }
     
-    h3:visible + p:visible {
+    .snarl-title:visible + .snarl-text:visible {
         margin-top:0.3em;
     }
     
-    &.snarl-no-title h3 {
+    &.snarl-no-title .snarl-title {
         display:none;
     }
     
-    &.snarl-no-text p {
+    &.snarl-no-text .snarl-text {
         display:none;
     }
+    
+    .snarl-image {
+        position:absolute;
+        width:80px;
+        top:0;
+        bottom:0;
+        left:0;
+        margin-right:@padding;
+        
+        * {
+            position:absolute;
+            display:block;
+            top:50%;
+            left:50%;
+            width:50px;
+            height:50px;
+            margin-top:-25px;
+            margin-left:-25px;
+            
+            // for fontawesome icons/graphicon fonts
+            line-height:50px;
+            font-size:25px;
+            vertical-align:middle;
+            text-align:center;
+        }
+    }
+    
+    &.snarl-no-image {
+        padding-left:@padding;
+        
+        .snarl-image {
+            //display:none;
+        }
+    }
+        
 
     // support for Waves > http://fian.my.id/Waves/
     &.waves-effect {
+        display:block; // fix inline-block issue
+        
         .waves-ripple {
             z-index: 3;
 

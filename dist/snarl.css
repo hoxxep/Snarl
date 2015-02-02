@@ -19,9 +19,11 @@
 }
 .snarl-notification {
   box-sizing: border-box;
+  display: block;
   width: 100%;
-  padding: 15px;
   margin: 0 0 10px;
+  padding: 15px;
+  padding-left: 80px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -85,27 +87,55 @@
 .snarl-notification:hover .snarl-close {
   opacity: 1;
 }
-.snarl-notification h3 {
+.snarl-notification .snarl-title {
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 1.4em;
 }
-.snarl-notification p {
+.snarl-notification .snarl-text {
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   font-size: 1em;
   line-height: 1.25em;
 }
-.snarl-notification h3:visible + p:visible {
+.snarl-notification .snarl-title:visible + .snarl-text:visible {
   margin-top: 0.3em;
 }
-.snarl-notification.snarl-no-title h3 {
+.snarl-notification.snarl-no-title .snarl-title {
   display: none;
 }
-.snarl-notification.snarl-no-text p {
+.snarl-notification.snarl-no-text .snarl-text {
   display: none;
+}
+.snarl-notification .snarl-image {
+  position: absolute;
+  width: 80px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin-right: 15px;
+}
+.snarl-notification .snarl-image * {
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  margin-top: -25px;
+  margin-left: -25px;
+  line-height: 50px;
+  font-size: 25px;
+  vertical-align: middle;
+  text-align: center;
+}
+.snarl-notification.snarl-no-image {
+  padding-left: 15px;
+}
+.snarl-notification.waves-effect {
+  display: block;
 }
 .snarl-notification.waves-effect .waves-ripple {
   z-index: 3;
