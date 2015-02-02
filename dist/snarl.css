@@ -109,7 +109,7 @@
 .snarl-notification.snarl-no-text .snarl-text {
   display: none;
 }
-.snarl-notification .snarl-image {
+.snarl-notification .snarl-icon {
   position: absolute;
   width: 80px;
   top: 0;
@@ -117,7 +117,7 @@
   left: 0;
   margin-right: 15px;
 }
-.snarl-notification .snarl-image * {
+.snarl-notification .snarl-icon * {
   position: absolute;
   display: block;
   top: 50%;
@@ -127,12 +127,15 @@
   margin-top: -25px;
   margin-left: -25px;
   line-height: 50px;
-  font-size: 25px;
+  font-size: 28px;
   vertical-align: middle;
   text-align: center;
 }
-.snarl-notification.snarl-no-image {
+.snarl-notification.snarl-no-icon {
   padding-left: 15px;
+}
+.snarl-notification.snarl-no-icon .snarl-icon {
+  display: none;
 }
 .snarl-notification.waves-effect {
   display: block;
