@@ -1,6 +1,6 @@
 /*!
  * Snarl - Web Notifications based on Growl
- * @version v0.3.0
+ * @version v0.3.1
  * @link https://hoxxep.github.io/snarl
  *
  * Copyright 2014-2015 Liam Gray <hoxxep@gmail.com>
@@ -35,20 +35,20 @@
   left: 400px;
   transition: opacity 0.21s ease, left 0.35s ease-in, margin 0.35s ease;
 }
-.snarl-notification.inbound {
+.snarl-notification.snarl-in {
   opacity: 1;
   left: 0;
   transition: opacity 0.28s ease-out 0.07s, left 0.35s ease-out;
 }
 .snarl-notification.no-hover:not(.not-dismissable) {
-  padding: 15px 95px 15px 15px;
+  padding-right: 95px;
 }
 .snarl-notification.no-hover:not(.not-dismissable) .snarl-close {
   opacity: 1;
   box-shadow: none;
 }
 .snarl-notification.not-dismissable {
-  padding: 15px;
+  padding-right: 15px;
 }
 .snarl-notification.not-dismissable .snarl-close {
   display: none;

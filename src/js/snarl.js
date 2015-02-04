@@ -122,7 +122,7 @@
 
             // Animate: and yes, it needs to be in a setTimeout for the CSS3 animation to work.
             setTimeout(function() {
-                addClass(element, 'inbound');
+                addClass(element, 'snarl-in');
                 element.removeAttribute('style'); //clear reminants of the remove animation
             }, 0);
             
@@ -143,7 +143,7 @@
                 var notification = Snarl.notifications[id].element;
 
                 // animation [& collapse margin]
-                removeClass(notification, 'inbound');
+                removeClass(notification, 'snarl-in');
                 if (document.body.clientWidth > 480) {
                     notification.style.marginBottom = (-notification.offsetHeight) + 'px';
                 } else {

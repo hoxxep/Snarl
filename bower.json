@@ -1,7 +1,7 @@
 {
   "name": "Snarl",
-  "version": "0.3.0",
-  "homepage": "https://hoxxep.github.io/Snarl",
+  "version": "0.3.1",
+  "homepage": "https://hoxxep.github.io/snarl",
   "authors": [
     "Liam Gray <hoxxep@gmail.com>"
   ],
@@ -16,13 +16,6 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "src",
-    "gulpfile.js",
-    "package.json",
-    "README.md",
-    "docs",
-    "dist.sh",
-    "_config.yml",
     "_site"
   ]
 }

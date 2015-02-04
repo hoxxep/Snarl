@@ -34,7 +34,7 @@
     width: 100%;
     margin: 0 0 10px;
     padding: @padding;
-    padding-left: (80px ); //+ @padding
+    padding-left: 80px;
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -57,7 +57,7 @@
     // outbound transition
     transition:opacity (@time * 0.6) ease, left @time ease-in, margin @time ease;
 
-    &.inbound {
+    &.snarl-in {
         opacity:1;
         left:0;
 
@@ -66,7 +66,7 @@
     }
     
     &.no-hover:not(.not-dismissable) {
-        padding: @padding (80px + @padding) @padding @padding;
+        padding-right: (80px + @padding);
         
         .snarl-close {
             opacity: 1;
@@ -75,7 +75,7 @@
     }
 
     &.not-dismissable {
-        padding: @padding;
+        padding-right: @padding;
 
         .snarl-close {
             display: none;
