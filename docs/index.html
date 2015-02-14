@@ -36,10 +36,21 @@ title: Snarl - Growl notifications for your web app
             <a id="snarl-github" class="big-button waves-effect waves-button" href="https://github.com/hoxxep/Snarl/"><i class="fa fa-lg fa-github"></i> View on Github</a>
         </p>
 
-        <!-- TODO: Getting started -->
+        <h1 id="getting-started">Getting Started</h1>
+        <h3>Download the Files</h3>
+        <p>Hit the download link above and in the downloaded <code>snarl.zip</code> file will be source and minified versions of the JS, CSS and optionally the LESS files too.</p>
+
+        <h3>Clone the Repo</h3>
+        <p>Another method of getting the files is cloning the repo via <code>git clone https://github.com/hoxxep/Snarl</code>. You'll find the files which can be used in projects inside the <code>dist/</code> folder. If you have cloned the repo and are modifying the source files to suit your project's aesthetic, instead of editing files in the dist folder, edit them inside the <code>src/</code> folder. Then, in the Snarl repo root directory (provided you have <a href="http://nodejs.org/" target="_blank" title="Node.js">node</a> installed) you can run <code>npm install</code>, <code>npm install -g gulp</code>, <code>gulp</code> and this will watch the source files and rebuild the dist files if any changes occur - automatically compiling the LESS and minifying the source files.</p>
+
+        <h3>Adding the Files to Your Project</h3>
+        <p>Snarl gives you pre-minified versions of the CSS and JS for immediate embedding into projects. Otherwise, the raw files are still there in case you want to edit them. Included is also <code>snarl.less</code> which is the source for the compiled CSS, modifying this is the fastest way to change the aesthetic of the notification design or animations to suit your project.</p>
+        <p>Check out the demos below for usage examples.</p>
+
+        <!-- TODO: customising notifications -->
 
         <h1>Snarl Notification Demos</h1>
-        <p><strong>Note:</strong> Snarl itself does not require jQuery as a dependency, but these examples use jQuery to wire up the click events for clarity.</p>
+        <p><strong>Note:</strong> Snarl itself does not require jQuery as a dependency, but these examples use jQuery for the click events for clarity.</p>
         <!-- TODO: proper links and contents (sticky side-nav?) -->
         <!--<ul>
             <li>Basic</li>
