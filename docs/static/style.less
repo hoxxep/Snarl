@@ -7,17 +7,20 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 header.jumbotron {
-    background:#1c9af5 url('shooting-star.jpg');
+//    background:#1c9af5 url('shooting-star.jpg');
     background-size:cover;
     background-position:center;
+    background: transparent;
     
     color: #fff;
-    text-shadow:0.03em 0.05em 1px rgba(0,0,0,0.8);
+    text-shadow:0.03rem 0.05rem 1px rgba(0,0,0,0.8);
     text-align:center;
     box-shadow: 0 -20px 10px -20px rgba(0,0,0,0.5) inset;
     
     width:100%;
     padding:150px 5px;
+    
+    overflow: hidden;
 
     .subtitle {
         margin-bottom:0;
@@ -27,6 +30,21 @@ header.jumbotron {
     .version {
         font-size:1.1em;
         font-weight:300;
+    }
+    
+    #header-background {
+        background: url('shooting-star.jpg');
+        position: absolute;
+        z-index: -1;
+        top: -80%;
+        left: 0;
+        min-width: 100%;
+        min-height:200%;
+    }
+    #header-text {
+        position:relative;
+        height:100%;
+        margin:0 auto;
     }
 }
 

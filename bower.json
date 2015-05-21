@@ -17,5 +17,8 @@
     "node_modules",
     "bower_components",
     "_site"
-  ]
+  ],
+  "dependencies": {
+    "scrollmagic": "~2.0.5"
+  }
 }

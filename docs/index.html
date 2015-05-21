@@ -17,14 +17,44 @@ title: Snarl - Growl notifications for your web app
 
     <!-- javascript (at top so demos can be places inline for clarity) -->
     <script src="static/jquery-1.10.2.min.js"></script>
+    
+    <script type="text/javascript" src="http://janpaepke.github.io/ScrollMagic//js/lib/greensock/TweenMax.min.js"></script>
+    <script src="static/ScrollMagic.min.js"></script>
+    <script type="text/javascript" src="http://janpaepke.github.io/ScrollMagic/scrollmagic/uncompressed/plugins/animation.gsap.js"></script>
     <script src="static/waves.min.js"></script>
     <script src="static/snarl.js"></script>
+    
+    <script>
+        
+        $(document).ready(function() {
+            var percentage = (function() {
+                var container = $('header.jumbotron').innerHeight();
+                return function(pct) {
+                    return (container * pct) + 'px';
+                }
+            })();
+            
+            var containerHeight = $('header.jumbotron').innerHeight();
+            
+            console.log(percentage(0.5));
+            
+            // init controller
+            var controller = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: containerHeight + 'px'}});
+
+            new ScrollMagic.Scene().setTween("#header-background", {y: percentage(0.85), ease: Linear.easeNone}).addTo(controller);
+
+            new ScrollMagic.Scene().setTween("#header-text", {y: percentage(0.5), opacity: 0.1, ease: Linear.easeNone}).addTo(controller);
+        });
+    </script>
 </head>
 <body>
     <header class="jumbotron waves-effect waves-light">
-        <h1>Snarl</h1>
-        <p class="subtitle">Growl-style notifications for your web app.</p>
-        <p class="version">Currently v0.3.2</p>
+        <div id="header-background"></div>
+        <div id="header-text">
+            <h1>Snarl</h1>
+            <p class="subtitle">Growl-style notifications for your web app.</p>
+            <p class="version">Currently v0.3.2</p>
+        </div>
     </header>
     <div id="wrapper">
         <!-- TODO: nav bar -->
