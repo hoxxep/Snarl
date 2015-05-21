@@ -216,12 +216,13 @@
      * Handle all click events in notifications
      */
     function clickNotification(event) {
-        if (event.toElement.getAttribute('id') === 'snarl-wrapper') {
+        var notification = event.target ? event.target : event.toElement;
+        
+        if (notification.getAttribute('id') === 'snarl-wrapper') {
             return;
         }
 
-        var notification = event.toElement,
-            close = false;
+        var close = false;
         while (!hasClass(notification, 'snarl-notification')) {
             if (hasClass(notification, 'snarl-close')) {
                 close = true;

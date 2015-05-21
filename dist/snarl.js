@@ -1,6 +1,6 @@
 /*!
  * Snarl - Web Notifications based on Growl
- * @version v0.3.2
+ * @version v0.3.3
  * @link https://hoxxep.github.io/snarl
  *
  * Copyright 2014-2015 Liam Gray <hoxxep@gmail.com>
@@ -226,12 +226,13 @@
      * Handle all click events in notifications
      */
     function clickNotification(event) {
-        if (event.toElement.getAttribute('id') === 'snarl-wrapper') {
+        var notification = event.target ? event.target : event.toElement;
+        
+        if (notification.getAttribute('id') === 'snarl-wrapper') {
             return;
         }
 
-        var notification = event.toElement,
-            close = false;
+        var close = false;
         while (!hasClass(notification, 'snarl-notification')) {
             if (hasClass(notification, 'snarl-close')) {
                 close = true;
