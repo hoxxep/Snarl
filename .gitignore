@@ -1,6 +1,9 @@
 # Mac Stuff
 .DS_Store
 
+# JetBrains IDEs
+.idea/
+
 # Package folders
 node_modules/
 bower_components/
