@@ -151,7 +151,9 @@
                 }
 
                 Snarl.notifications[id].removeTimer = setTimeout(function() {
-                    notification.parentElement.removeChild(notification);
+                    if (null !== notification.parentElement) {
+                        notification.parentElement.removeChild(notification);
+                    }
                 }, 500);
 
                 clearTimeout(Snarl.notifications[id].timer);
