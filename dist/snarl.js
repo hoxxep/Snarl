@@ -3,7 +3,7 @@
  * @version v0.3.3
  * @link https://hoxxep.github.io/snarl
  *
- * Copyright 2014-2015 Liam Gray <hoxxep@gmail.com>
+ * Copyright 2014-2017 Liam Gray <hoxxep@gmail.com>
  * Released under the MIT license
  * @license https://github.com/hoxxep/Snarl/blob/master/LICENSE 
  */
@@ -11,18 +11,19 @@
 ;(function (window, document) {
     'use strict';
 
-    //TODO: add success, error, warning, and custom icons?
-    //TODO: merge addNotification and reopenNotification
-    // into a single openNotification(id, options) class?
-    // eg. if no notification exists for id then create a new
+    // TODO: refactor to ES6 and make API far more usable with notification objects rather than IDs
+    // TODO: add success, error, warning, and custom icons?
+    // TODO: merge addNotification and reopenNotification
+    //  into a single openNotification(id, options) class?
+    //  eg. if no notification exists for id then create a new
     //     one and return new id otherwise reopen existing?
 
     //FUTURE: optional sidebar with past/missed notifications
 
     var Snarl = Snarl || {};
 
-    /** 
-     * Public object
+    /**
+     * Public Snarl object
      */
     Snarl = {
         count: 0,
@@ -36,21 +37,34 @@
             dismissable: true
         },
 
-        setDefaultOptions: function(options) {
+        /**
+         * Set the default notification options for any new notifications, or edited notifications
+         * @param options
+         */
+        setDefaultOptions: function (options) {
             Snarl.defaultOptions = mergeOptions(Snarl.defaultOptions, options);
         },
-        
-        setNotificationHTML: function(html_string) {
+
+        /**
+         * Set the notification html template
+         * @param htmlString
+         */
+        setNotificationHTML: function (htmlString) {
             // turn string into HTML element
             var temp = document.createElement('div');
-            temp.innerHTML = html_string;
+            temp.innerHTML = htmlString;
             var notificationHTML = temp.firstChild;
             temp.removeChild(notificationHTML);
-            
+
             notificationHtmlTemplate = notificationHTML;
         },
-        
-        addNotification: function(options) {
+
+        /**
+         * Add a new notification with the specified options.
+         * @param options
+         * @returns {string} The notification ID
+         */
+        addNotification: function (options) {
             Snarl.count += 1;
             var id = makeID();
 
@@ -60,8 +74,13 @@
             return id;
         },
 
-        editNotification: function(id, options) {
-            if (Snarl.notifications[id].removeTimer !== null) {
+        /**
+         * Set a notification's objects. Note this will reset the remove timer even if that option is not specified.
+         * @param id
+         * @param options
+         */
+        editNotification: function (id, options) {
+            if (Snarl.notifications[id].removeTimer) {
                 clearTimeout(Snarl.notifications[id].removeTimer);
                 Snarl.notifications[id].removeTimer = null;
             }
@@ -70,15 +89,16 @@
 
             options = options || {};
 
-            // use default options for merging
-            if (Snarl.notifications[id].options === undefined) {
+            // Use default options for merging
+            if (!Snarl.notifications[id].options) {
                 Snarl.notifications[id].options = Snarl.defaultOptions;
             }
+
             options = mergeOptions(Snarl.notifications[id].options, options);
 
             var element = Snarl.notifications[id].element;
 
-            //** Title
+            // Title
             var title = element.getElementsByClassName('snarl-title')[0];
             if (options.title) {
                 title.textContent = options.title;
@@ -88,7 +108,7 @@
                 addClass(element, 'snarl-no-title');
             }
 
-            //** Text
+            // Text
             var text = element.getElementsByClassName('snarl-text')[0];
             if (options.text) {
                 text.textContent = options.text;
@@ -97,7 +117,7 @@
                 text.textContent = '';
                 addClass(element, 'snarl-no-text');
             }
-            
+
             //** Icon
             var icon = element.getElementsByClassName('snarl-icon')[0];
             if (options.icon) {
@@ -109,21 +129,23 @@
             }
 
             //** Timeout
-            if (options.timer !== null) {
+            if (options.timer) {
                 clearTimeout(Snarl.notifications[id].timer);
             }
+
             var timer = null;
-            if (options.timeout !== null) {
-                timer = setTimeout(function() {
+            if (options.timeout) {
+                timer = setTimeout(function () {
                     Snarl.removeNotification(id);
                 }, options.timeout);
             }
+
             Snarl.notifications[id].timer = timer;
 
-            //** Click Action/Callback
+            // Click Action/Callback
             Snarl.notifications[id].action = options.action;
 
-            //** Dismissable
+            // Dismissable
             if (options.dismissable) {
                 removeClass(element, 'not-dismissable');
             } else {
@@ -131,12 +153,12 @@
             }
 
             // Animate: and yes, it needs to be in a setTimeout for the CSS3 animation to work.
-            setTimeout(function() {
+            setTimeout(function () {
                 addClass(element, 'snarl-in');
                 element.removeAttribute('style'); //clear reminants of the remove animation
             }, 0);
-            
-            // no hover if touch device
+
+            // No hover if touch device
             if (isTouchDevice()) {
                 addClass(element, 'no-hover');
             }
@@ -144,11 +166,20 @@
             Snarl.notifications[id].options = options;
         },
 
-        reOpenNotification: function(id) {
+        /**
+         * Re-open an existing removed notification
+         * @param id
+         */
+        reOpenNotification: function (id) {
             Snarl.editNotification(id);
         },
 
-        removeNotification: function(id) {
+        /**
+         * Remove a notification from the DOM with animations
+         * @param id
+         * @returns {boolean}
+         */
+        removeNotification: function (id) {
             if (!Snarl.isDismissed(id)) {
                 var notification = Snarl.notifications[id].element;
 
@@ -160,18 +191,26 @@
                     notification.style.marginTop = (-notification.offsetHeight) + 'px';
                 }
 
-                Snarl.notifications[id].removeTimer = setTimeout(function() {
-                    notification.parentElement.removeChild(notification);
+                Snarl.notifications[id].removeTimer = setTimeout(function () {
+                    if (notification && notification.parentElement) {
+                        notification.parentElement.removeChild(notification);
+                    }
                 }, 500);
 
                 clearTimeout(Snarl.notifications[id].timer);
                 return true;
             } else {
+                // TODO: in API redesign, should this not throw an error?
                 return false;  //failed to remove
             }
         },
 
-        isDismissed: function(id) {
+        /**
+         * Check if a notification is dismissed
+         * @param id
+         * @returns {boolean}
+         */
+        isDismissed: function (id) {
             if (Snarl.exists(id)) {
                 return Snarl.notifications[id].element.parentElement === null;
             } else {
@@ -179,31 +218,56 @@
             }
         },
 
-        exists: function(id) {
+        /**
+         * Check if a notification exists with a specific ID
+         * @param id
+         * @returns {boolean}
+         */
+        exists: function (id) {
             return Snarl.notifications[id] !== undefined;
         },
 
-        setTitle: function(id, title) {
+        /**
+         * Set a notification's title
+         * @param id
+         * @param title
+         */
+        setTitle: function (id, title) {
             Snarl.editNotification(id, {title: title});
         },
 
-        setText: function(id, text) {
+        /**
+         * Set a notification's text
+         * @param id
+         * @param text
+         */
+        setText: function (id, text) {
             Snarl.editNotification(id, {text: text});
         },
-        
-        setIcon: function(id, icon) {
+
+        /**
+         * Set a notification's icon
+         * @param id
+         * @param icon
+         */
+        setIcon: function (id, icon) {
             Snarl.editNotification(id, {icon: icon});
         },
 
-        setTimeout: function(id, timeout) {
+        /**
+         * Set a notification's timeout duration
+         * @param id
+         * @param timeout
+         */
+        setTimeout: function (id, timeout) {
             Snarl.editNotification(id, {timeout: timeout});
         }
     };
 
 
     /**
-     * Generate random ID string and check it's not already
-     * been used
+     * Generate random ID string and check it's not already been used
+     * @returns {string}
      */
     function makeID() {
         var id = '';
@@ -211,7 +275,7 @@
 
         do {
             id = '';
-            for(var i=0; i<5; i++) {
+            for (var i = 0; i < 5; i++) {
                 id += possible.charAt(
                     Math.floor(Math.random() * possible.length)
                 );
@@ -224,10 +288,11 @@
 
     /**
      * Handle all click events in notifications
+     * @param event
      */
     function clickNotification(event) {
         var notification = event.target ? event.target : event.toElement;
-        
+
         if (notification.getAttribute('id') === 'snarl-wrapper') {
             return;
         }
@@ -237,6 +302,7 @@
             if (hasClass(notification, 'snarl-close')) {
                 close = true;
             }
+
             notification = notification.parentElement;
         }
 
@@ -247,6 +313,7 @@
             Snarl.removeNotification(id);
         } else {
             var action = Snarl.notifications[id].action;
+
             if (action === undefined || action === null) {
                 return;
             } else if (typeof action === "string") {
@@ -265,22 +332,24 @@
     /**
      * Injects base notification html to document if it's
      * not been added yet.
+     * @param id
      */
     var notificationHtmlTemplate = null;
+
     function addNotificationHTML(id) {
         if (Snarl.notifications[id] === undefined) {
             Snarl.notifications[id] = {};
         }
-        
+
         // Generate new HTML into cache
         if (Snarl.notifications[id].element === null || Snarl.notifications[id].element === undefined) {
             var notificationWrapper = notificationHtmlTemplate.cloneNode(true);
-            
-            addClass(notificationWrapper,'snarl-notification');
+
+            addClass(notificationWrapper, 'snarl-notification');
             notificationWrapper.setAttribute('id', 'snarl-notification-' + id);
             Snarl.notifications[id].element = notificationWrapper;
         }
-        
+
         // Insert HTML
         if (Snarl.notifications[id].element.parentElement === null) {
             var wrapper = document.getElementById('snarl-wrapper');
@@ -299,8 +368,12 @@
      */
     function mergeOptions(defaults, options) {
         var merged = {}, attrname;
-        for (attrname in defaults) {merged[attrname] = defaults[attrname];}
-        for (attrname in options) {merged[attrname] = options[attrname];}
+        for (attrname in defaults) {
+            merged[attrname] = defaults[attrname];
+        }
+        for (attrname in options) {
+            merged[attrname] = options[attrname];
+        }
         return merged;
     }
 
@@ -323,7 +396,7 @@
         var classPattern = new RegExp('(?:^|\\s)' + className + '(?!\\S)', 'g');
         element.className = element.className.replace(classPattern, '');
     }
-    
+
     /**
      * Check whether the dismiss button needs to be permanently visible
      * http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
@@ -341,7 +414,7 @@
         snarlWrapper.setAttribute('id', 'snarl-wrapper');
         snarlWrapper.addEventListener('click', clickNotification);
         document.body.appendChild(snarlWrapper);
-        
+
         Snarl.setNotificationHTML('<div class="snarl-notification waves-effect"><div class="snarl-icon"></div><h3 class="snarl-title"></h3><p class="snarl-text"></p><div class="snarl-close waves-effect"><svg class="snarl-close-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve" height="100px" width="100px"><g><path d="M49.5,5c-24.9,0-45,20.1-45,45s20.1,45,45,45s45-20.1,45-45S74.4,5,49.5,5z M71.3,65.2c0.3,0.3,0.5,0.7,0.5,1.1   s-0.2,0.8-0.5,1.1L67,71.8c-0.3,0.3-0.7,0.5-1.1,0.5s-0.8-0.2-1.1-0.5L49.5,56.6L34.4,71.8c-0.3,0.3-0.7,0.5-1.1,0.5   c-0.4,0-0.8-0.2-1.1-0.5l-4.3-4.4c-0.3-0.3-0.5-0.7-0.5-1.1c0-0.4,0.2-0.8,0.5-1.1L43,49.9L27.8,34.9c-0.6-0.6-0.6-1.6,0-2.3   l4.3-4.4c0.3-0.3,0.7-0.5,1.1-0.5c0.4,0,0.8,0.2,1.1,0.5l15.2,15l15.2-15c0.3-0.3,0.7-0.5,1.1-0.5s0.8,0.2,1.1,0.5l4.3,4.4   c0.6,0.6,0.6,1.6,0,2.3L56.1,49.9L71.3,65.2z"/></g></svg></div></div>');
     }
 
